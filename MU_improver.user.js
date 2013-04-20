@@ -23,12 +23,37 @@ function userScriptAction() {
             '#main_content > div > div:first-of-type' ,
             '#maintitle' ,
             '#signupbutton' ,
-            '#center_row1'
+            '#center_row1' ,
+            'img[src="images/footer_new.jpg"]'
         ];
 
         removeThese.forEach(function(elem) {
            $(elem).fadeOut('fast');
         });
+
+        // Now we are going to scrape the tables for the contents of their cells.
+
+        // First, grab the date boxes
+        var dates = $.makeArray($('#main_content div p.titlesmall')).map(function(date) {
+            return $(date).text();
+        });
+
+        var tables = $.makeArray($('#main_content > div > div > table')).map(function(table) {
+            return $.makeArray($(table).find('tr')).map(function(tableRow) {
+                return $.makeArray($(tableRow).find('td')).map(function(tableCell) {
+                    return $(tableCell).html();
+                });
+            });
+        });
+
+        // Remove the table headers, which are the first row of each table.
+        // Dear MangaUpdates: Learn to use proper semantics.  This is such a cludge.
+        tables.forEach(function(elem) {
+            elem.splice(0,1)
+        });
+
+        console.log(dates[0]);
+        console.log(tables[0][0][0]);
     });
 }
 
