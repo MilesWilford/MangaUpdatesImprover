@@ -13,23 +13,27 @@
 
 function userScriptAction() {
     $(document).ready(function() {
-        var removeThese = [
-            '.left_content' ,
-            '.right_content' ,
-            '#page_title' ,
-            '#banner' ,
-            '#login' ,
-            '#main_content > table:first-child' ,
-            '#main_content > div > div:first-of-type' ,
-            '#maintitle' ,
-            '#signupbutton' ,
-            '#center_row1' ,
-            'img[src="images/footer_new.jpg"]'
-        ];
+        // var removeThese = [
+            // '.left_content' ,
+            // '.right_content' ,
+            // '#page_title' ,
+            // '#banner' ,
+            // '#login' ,
+            // '#main_content > table:first-child' ,
+            // '#main_content > div > div:first-of-type' ,
+            // '#maintitle' ,
+            // '#signupbutton' ,
+            // '#center_row1' ,
+            // 'img[src="images/footer_new.jpg"]'
+        // ];
+//
+        // removeThese.forEach(function(elem) {
+           // $(elem).hide();
+        // });
 
-        removeThese.forEach(function(elem) {
-           $(elem).fadeOut('fast');
-        });
+        // This stuff will all add in our new mu-improver div
+        var $muImp = $('<div id="mu-improver"/>');
+        $muImp.appendTo('body');
 
         // Now we are going to scrape the tables for the contents of their cells.
 
@@ -52,8 +56,73 @@ function userScriptAction() {
             elem.splice(0,1)
         });
 
-        console.log(dates[0]);
-        console.log(tables[0][0][0]);
+        if (dates.length > tables.length) {
+            console.log("For some reason we have more dates than tables.");
+        } else if (dates.length < tables.length) {
+            console.log("For some reason we have more tables than dates.");
+        } else {
+            for (var i = 0; i < dates.length; i++) {
+                $muImp.append('<h2>' + dates[i] + '</h2>');
+                var tableContents =
+                $muImp.append('<table>'
+                    + tables[i].map(function(rows) {
+                       return '<tr><td>'
+                            + rows.join("</td><td>")
+                            + '</td></tr>';
+                    }).join("")
+                    + '</table>'
+                );
+            }
+        }
+
+        // Now append some styles to the document
+        var cssToAdd = '\
+        #mu-improver { \
+            position: absolute;\
+                top: 0;\
+                left: 0;\
+            z-index: 100;\
+            background-color: #EEE;\
+            width: 100%;\
+            text-align: center;\
+            font-family: Arial;\
+        }\
+        \
+        #mu-improver h2 {\
+            font-size: 16px;\
+            padding: 0\
+        }\
+        \
+        #mu-improver table {\
+            max-width: 960px;\
+            margin: 0 auto;\
+            font-size: 12px;\
+        }\
+        \
+        #mu-improver tr {\
+            border-bottom: 1px #000 solid;\
+            display: block;\
+        }\
+        \
+        #mu-improver tr:hover {\
+            background-color: #FFF;\
+        }\
+        \
+        #mu-improver td:first-child {\
+            text-align: right;\
+            width: 300px;\
+        }\
+        \
+        #mu-improver td:nth-child(2) {\
+            width: 80px;\
+        }\
+        \
+        #mu-improver td:last-child {\
+            text-align: left;\
+            width: 300px;\
+        }';
+
+        $('body').append('<style type="text/css">' + cssToAdd + '</style>');
     });
 }
 
