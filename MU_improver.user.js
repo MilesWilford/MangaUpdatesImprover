@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     001
+// @version     002
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -13,35 +13,17 @@
 
 function userScriptAction() {
     $(document).ready(function() {
-        // var removeThese = [
-            // '.left_content' ,
-            // '.right_content' ,
-            // '#page_title' ,
-            // '#banner' ,
-            // '#login' ,
-            // '#main_content > table:first-child' ,
-            // '#main_content > div > div:first-of-type' ,
-            // '#maintitle' ,
-            // '#signupbutton' ,
-            // '#center_row1' ,
-            // 'img[src="images/footer_new.jpg"]'
-        // ];
-//
-        // removeThese.forEach(function(elem) {
-           // $(elem).hide();
-        // });
-
-        // This stuff will all add in our new mu-improver div
+        // This will add in our new mu-improver div
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
 
         // Now we are going to scrape the tables for the contents of their cells.
-
         // First, grab the date boxes
         var dates = $.makeArray($('#main_content div p.titlesmall')).map(function(date) {
             return $(date).text();
         });
 
+        // Now, grab the content of the release tables
         var tables = $.makeArray($('#main_content > div > div > table')).map(function(table) {
             return $.makeArray($(table).find('tr')).map(function(tableRow) {
                 return $.makeArray($(tableRow).find('td')).map(function(tableCell) {
@@ -56,6 +38,7 @@ function userScriptAction() {
             elem.splice(0,1)
         });
 
+        // If MU fucks something up, well, then it'll be fucked up
         if (dates.length > tables.length) {
             console.log("For some reason we have more dates than tables.");
         } else if (dates.length < tables.length) {
