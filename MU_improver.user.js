@@ -5,7 +5,7 @@
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
 // @version     004
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-// @include     *mangaupdates.com/releases.html*
+// @include     *mangaupdates.com/releases.html
 //
 // @history
 //
@@ -152,7 +152,11 @@ function userScriptAction() {
         \
         #mu-imp-content-box {\
             border-left: 1px #000 solid;\
-            float: left;\
+            height: 100%;\
+            overflow: scroll;\
+            position: fixed;\
+                top: 0;\
+                left: 470px;\
         }\
         \
             #mu-imp-content-box td.series_content_cell {\
