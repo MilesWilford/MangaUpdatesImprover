@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     002
+// @version     003
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -44,10 +44,12 @@ function userScriptAction() {
         } else if (dates.length < tables.length) {
             console.log("For some reason we have more tables than dates.");
         } else {
+            $releasesBox = $('<div id="mu-imp-release-listing"/>');
+            $releasesBox.appendTo($muImp);
             for (var i = 0; i < dates.length; i++) {
-                $muImp.append('<h2>' + dates[i] + '</h2>');
+                $releasesBox.append('<h2>' + dates[i] + '</h2>');
                 var tableContents =
-                $muImp.append('<table>'
+                $releasesBox.append('<table>'
                     + tables[i].map(function(rows) {
                        return '<tr><td>'
                             + rows.join("</td><td>")
@@ -56,6 +58,41 @@ function userScriptAction() {
                     + '</table>'
                 );
             }
+
+            // Add in the box where we will display content
+            var $contentBox = $('<div id="mu-imp-content-box"/>');
+            $contentBox.appendTo($muImp);
+
+            // First-child tds links represent links to manga pages
+            var mangaLinks = $('td:first-child a');
+            mangaLinks.click(function() {
+                var target = $(this).attr('href') + ' .series_content_cell';
+                $contentBox.empty();
+                $contentBox.load(target);
+
+                return false;
+            });
+
+            // Preserve the option to open link not inline
+            mangaLinks.each(function() {
+                $(this).before(' <a style="float: left;" href=' + $(this).attr('href') + '>(Link)</a>')
+            });
+
+            // Last-child td links represent links to group pages
+            var groupLinks = $('td:last-child a');
+            groupLinks.click(function() {
+                var target = $(this).attr('href') + ' #main_content';
+                console.log(target);
+                $contentBox.empty();
+                $contentBox.load(target);
+
+                return false;
+            });
+
+            // Preserve the option to open link not inline
+            groupLinks.each(function() {
+                $(this).after(' <a href=' + $(this).attr('href') + '>(Link)</a>')
+            });
         }
 
         // Now append some styles to the document
@@ -67,45 +104,104 @@ function userScriptAction() {
             z-index: 100;\
             background-color: #EEE;\
             width: 100%;\
-            text-align: center;\
             font-family: Arial;\
+            text-align: left;\
         }\
         \
-        #mu-improver h2 {\
+        #mu-imp-release-listing h2 {\
             font-size: 16px;\
             padding: 0\
         }\
         \
-        #mu-improver table {\
-            max-width: 960px;\
-            margin: 0 auto;\
+        #mu-imp-release-listing table {\
             font-size: 12px;\
+            text-align: center;\
         }\
         \
-        #mu-improver tr {\
+        #mu-imp-release-listing tr {\
             border-bottom: 1px #000 solid;\
             display: block;\
         }\
         \
-        #mu-improver tr:hover {\
+        #mu-imp-release-listing tr:hover {\
             background-color: #FFF;\
         }\
         \
-        #mu-improver td:first-child {\
+        #mu-imp-release-listing td:first-child {\
             text-align: right;\
-            width: 300px;\
+            width: 200px;\
         }\
         \
-        #mu-improver td:nth-child(2) {\
+        #mu-imp-release-listing td:nth-child(2) {\
             width: 80px;\
         }\
         \
-        #mu-improver td:last-child {\
+        #mu-imp-release-listing td:last-child {\
             text-align: left;\
-            width: 300px;\
-        }';
+            width: 160px;\
+        }\
+        \
+        #mu-imp-release-listing {\
+            float: left;\
+        }\
+        \
+        #mu-imp-content-box {\
+            border-left: 1px #000 solid;\
+            float: left;\
+        }\
+        \
+            #mu-imp-content-box td.series_content_cell {\
+                width: auto;\
+            }\
+            \
+            #mu-imp-content-box li {\
+                display: inline;\
+            }\
+            \
+            #mu-imp-content-box .series_content_cell table {\
+                display: none;\
+            }\
+            \
+            #mu-imp-content-box .releasestitle {\
+                clear: both;\
+            }\
+            \
+            #listContainer {\
+                display: none;\
+            }\
+            \
+            .sContainer {\
+                float: left;\
+                width: 300px;\
+                clear: none;\
+                margin-left: 3em;\
+            }\
+            \
+            .sCat:first-child {\
+                text-align: center;\
+            }\
+            \
+            #main_content {\
+                width: 600px;\
+            }\
+            \
+            #main_content td, #main_content tr {\
+                background: transparent;\
+                border: 0;\
+                width: auto; !important;\
+                text-align: left;\
+            }\
+            \
+            #main_content table table table td {\
+                border-bottom: 1px #000 solid;\
+            }\
+            \
+            #main_content img {\
+                display: none;\
+            }';
 
         $('body').append('<style type="text/css">' + cssToAdd + '</style>');
+
     });
 }
 
