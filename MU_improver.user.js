@@ -177,7 +177,7 @@ function userScriptAction() {
             \
             .sContainer {\
                 float: left;\
-                width: 300px;\
+                width: 250px;\
                 clear: none;\
                 margin-left: 3em;\
             }\
