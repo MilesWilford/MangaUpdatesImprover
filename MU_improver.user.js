@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     003
+// @version     004
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -69,6 +69,7 @@ function userScriptAction() {
                 var target = $(this).attr('href') + ' .series_content_cell';
                 $contentBox.empty();
                 $contentBox.load(target);
+                $(this).addClass('link-clicked');
 
                 return false;
             });
@@ -82,9 +83,9 @@ function userScriptAction() {
             var groupLinks = $('td:last-child a');
             groupLinks.click(function() {
                 var target = $(this).attr('href') + ' #main_content';
-                console.log(target);
                 $contentBox.empty();
                 $contentBox.load(target);
+                $(this).addClass('link-clicked');
 
                 return false;
             });
@@ -97,6 +98,10 @@ function userScriptAction() {
 
         // Now append some styles to the document
         var cssToAdd = '\
+        .link-clicked {\
+            text-decoration: line-through !important;\
+        }\
+        \
         #mu-improver { \
             position: absolute;\
                 top: 0;\
