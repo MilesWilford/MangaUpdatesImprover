@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     004
+// @version     005
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html
 //
@@ -16,6 +16,7 @@ function userScriptAction() {
         // This will add in our new mu-improver div
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
+        $muImp.append('<div id="mu-improver-clear-storage"><a onclick="localStorage.clear(); return false;" href="#">Clear localStorage</a>');
 
         // Now we are going to scrape the tables for the contents of their cells.
         // First, grab the date boxes
@@ -64,7 +65,7 @@ function userScriptAction() {
             $contentBox.appendTo($muImp);
 
             // First-child tds links represent links to manga pages
-            var mangaLinks = $('td:first-child a');
+            var mangaLinks = $releasesBox.find('td:first-child a');
             mangaLinks.click(function() {
                 var target = $(this).attr('href') + ' .series_content_cell';
                 $contentBox.empty();
@@ -80,19 +81,74 @@ function userScriptAction() {
             });
 
             // Last-child td links represent links to group pages
-            var groupLinks = $('td:last-child a');
-            groupLinks.click(function() {
-                var target = $(this).attr('href') + ' #main_content';
-                $contentBox.empty();
-                $contentBox.load(target);
-                $(this).addClass('link-clicked');
-
-                return false;
-            });
+            var groupLinks = $releasesBox.find('td:last-child a');
 
             // Preserve the option to open link not inline
             groupLinks.each(function() {
-                $(this).after(' <a href=' + $(this).attr('href') + '>(Link)</a>')
+                // These links all end in id=groupid, so we can just pop the group id
+                var $currentGroup = $(this);
+                var groupLink = $currentGroup.attr('href');
+                var groupId = groupLink.split('=').pop();
+                var groupName = $currentGroup.text();
+
+                // Before we start, preserve the original link
+                $currentGroup.before($currentGroup.text() + ':<br />');
+                $currentGroup.after('<a href=' + groupLink + '>(MU)</a>')
+
+                // Check if we stored this in localStorage to reduce load times
+                if (typeof localStorage[groupId] == 'undefined') {
+                    $.ajax({
+                        url: groupLink,
+                        dataType: 'text',
+                        success: function(data) {
+                            // This is our screenscraper
+                            var scraper = $("<div>").html(data)[0]
+
+                            // GroupMUInfo is the table of data stored on the group's MU page.  What a pain to retrieve
+                            var groupMUInfo = $(scraper).find('#main_content table table:first-of-type table');
+
+                            // With some trial and error, I found where the URL and IRC links are stored.  Just trust me, unless it breaks.
+                            var groupUrl = groupMUInfo.find('tr:nth-of-type(3) td:nth-of-type(2) a').attr('href');
+                            var groupIrc = groupMUInfo.find('tr:nth-of-type(2) td:nth-of-type(2) a').attr('href')
+                            var badUrl = 'www.mangaupdates.com/groups';
+                            if (groupUrl && groupUrl.indexOf(badUrl) == -1) {
+                                $currentGroup.after('<a href="' + groupUrl + '">(Website)</a>');
+                            } else {
+                                groupUrl = "";
+                            }
+                            if (groupIrc && groupIrc.indexOf(badUrl) == -1) {
+                                $currentGroup.after('<a href="' + groupIrc + '">(IRC)</a>');
+                            } else {
+                                groupIrc = "";
+                            }
+                            //Double-check that both have a length else we'll not want to include it.
+                            $currentGroup.remove();
+
+                            // So we aren't hitting MU with too many HTTP requests, we will store these data points.
+                            // this would be easier if they provided an API, but whatever.
+                            var groupInfo = [groupUrl, groupIrc];
+                            localStorage[groupId] = JSON.stringify(groupInfo);
+                         }
+                    });
+                } else {
+                    // We previously stored the data, so just get it from localStorage and skip screenscraping.
+                    // Was stored as [groupUrl, groupIrc] using JSON.stringify
+                    var groupInfo = JSON.parse(localStorage[groupId]);
+                    var groupIrc = groupInfo[1];
+                    var groupUrl = groupInfo[0];
+
+                    //Double-check that both have a length else we'll not want to include it.
+                    if (groupUrl.length > 0) {
+                        $currentGroup.after('<a href="' + groupUrl + '">(Website)</a>');
+                    }
+                    if (groupIrc.length > 0) {
+                        $currentGroup.after('<a href="' + groupIrc + '">(IRC)</a>');
+                    }
+                    //Double-check that both have a length else we'll not want to include it.
+                    $currentGroup.remove();
+                    $currentGroup.remove();
+                }
+
             });
         }
 
@@ -188,25 +244,6 @@ function userScriptAction() {
             \
             .sCat:first-child {\
                 text-align: center;\
-            }\
-            \
-            #main_content {\
-                width: 600px;\
-            }\
-            \
-            #main_content td, #main_content tr {\
-                background: transparent;\
-                border: 0;\
-                width: auto; !important;\
-                text-align: left;\
-            }\
-            \
-            #main_content table table table td {\
-                border-bottom: 1px #000 solid;\
-            }\
-            \
-            #main_content img {\
-                display: none;\
             }';
 
         $('body').append('<style type="text/css">' + cssToAdd + '</style>');
@@ -215,19 +252,21 @@ function userScriptAction() {
 }
 
 // Make sure we have jQuery to deal with Chrome not accepting @require
-if ( typeof jQuery == 'undefined') {
-    function addJQuery(callback) {
-        var script = document.createElement("script");
-        script.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-        script.addEventListener('load', function() {
+if ( typeof localStorage != 'undefined') {
+    if ( typeof jQuery == 'undefined') {
+        function addJQuery(callback) {
             var script = document.createElement("script");
-            script.textContent = "(" + callback.toString() + ")();";
+            script.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+            script.addEventListener('load', function() {
+                var script = document.createElement("script");
+                script.textContent = "(" + callback.toString() + ")();";
+                document.body.appendChild(script);
+            }, false);
             document.body.appendChild(script);
-        }, false);
-        document.body.appendChild(script);
-    }
+        }
 
-    addJQuery(userScriptAction);
-} else {
-    userScriptAction();
+        addJQuery(userScriptAction);
+    } else {
+        userScriptAction();
+    }
 }
