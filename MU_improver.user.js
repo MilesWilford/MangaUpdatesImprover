@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     005
+// @version     006
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html
 //
@@ -13,18 +13,22 @@
 
 function userScriptAction() {
     $(document).ready(function() {
-        // This will add in our new mu-improver div
+        // This will add in the new mu-improver div
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
         $muImp.append('<div id="mu-improver-clear-storage"><a onclick="localStorage.clear(); return false;" href="#">Clear localStorage</a>');
 
-        // Now we are going to scrape the tables for the contents of their cells.
+        // Now scrape the tables for the contents of their cells.
         // First, grab the date boxes
         var dates = $.makeArray($('#main_content div p.titlesmall')).map(function(date) {
             return $(date).text();
         });
 
-        // Now, grab the content of the release tables
+        /*
+         * Now, grab the content of the release tables using some fancy maps.
+         * I'm going to load them all into a 3-dimensional array.  Thank god MU actually ID'd the container in this case... kind of
+         *              array[table(day), row, cell]
+         */
         var tables = $.makeArray($('#main_content > div > div > table')).map(function(table) {
             return $.makeArray($(table).find('tr')).map(function(tableRow) {
                 return $.makeArray($(tableRow).find('td')).map(function(tableCell) {
@@ -34,22 +38,28 @@ function userScriptAction() {
         });
 
         // Remove the table headers, which are the first row of each table.
-        // Dear MangaUpdates: Learn to use proper semantics.  This is such a cludge.
+        // Dear MangaUpdates: Learn to use <thead>
         tables.forEach(function(elem) {
             elem.splice(0,1)
         });
 
-        // If MU fucks something up, well, then it'll be fucked up
+        // There should be an equal number of dates and tables.  God help us if there aren't.
         if (dates.length > tables.length) {
-            console.log("For some reason we have more dates than tables.");
+            console.log("For some reason there are more dates than tables.");
         } else if (dates.length < tables.length) {
-            console.log("For some reason we have more tables than dates.");
+            console.log("For some reason there are more tables than dates.");
         } else {
+            // Note that the rest of the script is contained in this else.
+
             $releasesBox = $('<div id="mu-imp-release-listing"/>');
             $releasesBox.appendTo($muImp);
+
+            /*
+             * Now re-built the tables by iterating through the releases tables.
+             * This will create a nice clean template for the data.
+             */
             for (var i = 0; i < dates.length; i++) {
                 $releasesBox.append('<h2>' + dates[i] + '</h2>');
-                var tableContents =
                 $releasesBox.append('<table>'
                     + tables[i].map(function(rows) {
                        return '<tr><td>'
@@ -60,22 +70,36 @@ function userScriptAction() {
                 );
             }
 
-            // Add in the box where we will display content
+            // Add in the contentBox, which will more or less act as an iFrame.
             var $contentBox = $('<div id="mu-imp-content-box"/>');
             $contentBox.appendTo($muImp);
 
             // First-child tds links represent links to manga pages
             var mangaLinks = $releasesBox.find('td:first-child a');
+
+            /*
+             * If a manga page is clicked, populate $contentBox with the manga's page,
+             * which will be the contents of the first .series_content_cell in MU's awful semantics.
+             */
             mangaLinks.click(function() {
                 var target = $(this).attr('href') + ' .series_content_cell';
                 $contentBox.empty();
                 $contentBox.load(target);
-                $(this).addClass('link-clicked');
 
+                // Strikeout the link
+                $(this).addClass('link-clicked');
+                // Color the table row
+                $(this).parent().parent().addClass('tr-clicked');
+                // Stop the click from continuing to process
                 return false;
             });
 
-            // Preserve the option to open link not inline
+            // If you click on just a table row, toggle the coloration of that row
+            $releasesBox.find('tr').click(function() {
+                $(this).toggleClass('tr-clicked');
+            });
+
+            // Preserve the option to open the manga link by adding a (Link) option on the far left
             mangaLinks.each(function() {
                 $(this).before(' <a style="float: left;" href=' + $(this).attr('href') + '>(Link)</a>')
             });
@@ -83,34 +107,36 @@ function userScriptAction() {
             // Last-child td links represent links to group pages
             var groupLinks = $releasesBox.find('td:last-child a');
 
-            // Preserve the option to open link not inline
             groupLinks.each(function() {
-                // These links all end in id=groupid, so we can just pop the group id
+                // These links all end in 'id=groupid', so it's easy to snatch it
                 var $currentGroup = $(this);
                 var groupLink = $currentGroup.attr('href');
                 var groupId = groupLink.split('=').pop();
                 var groupName = $currentGroup.text();
 
-                // Before we start, preserve the original link
+                // Before starting, preserve the original link
                 $currentGroup.before($currentGroup.text() + ':<br />');
                 $currentGroup.after('<a href=' + groupLink + '>(MU)</a>')
 
-                // Check if we stored this in localStorage to reduce load times
+                // Check if value for this groupId is stored in localStorage
                 if (typeof localStorage[groupId] == 'undefined') {
+                    // No stored values, so time to ajax and screenscrape
                     $.ajax({
                         url: groupLink,
                         dataType: 'text',
                         success: function(data) {
                             console.log('Scraping data for: ' + groupName);
-                            // This is our screenscraper
-                            var scraper = $("<div>").html(data)[0]
+                            // I like jQuery, so I'm going to drop the content into an anonymous div
+                            var scraper = $("<div>").html(data)[0];
 
                             // GroupMUInfo is the table of data stored on the group's MU page.  What a pain to retrieve
                             var groupMUInfo = $(scraper).find('#main_content table table:first-of-type table');
 
-                            // With some trial and error, I found where the URL and IRC links are stored.  Just trust me, unless it breaks.
+                            // With some trial and error, I found where the URL and IRC links are stored.  Until this breaks, just trust it works.
                             var groupUrl = groupMUInfo.find('tr:nth-of-type(3) td:nth-of-type(2) a').attr('href');
                             var groupIrc = groupMUInfo.find('tr:nth-of-type(2) td:nth-of-type(2) a').attr('href')
+
+                            // Any time there was no IRC or URL, the above selectors grab the wrong link, but it's easy to spot
                             var badUrl = 'www.mangaupdates.com/groups';
                             if (groupUrl && groupUrl.indexOf(badUrl) == -1) {
                                 $currentGroup.after('<a href="' + groupUrl + '">(Website)</a>');
@@ -122,38 +148,40 @@ function userScriptAction() {
                             } else {
                                 groupIrc = "";
                             }
-                            //Double-check that both have a length else we'll not want to include it.
+
+                            // Delete the original link, it has already been replaced
                             $currentGroup.remove();
 
-                            // So we aren't hitting MU with too many HTTP requests, we will store these data points.
-                            // this would be easier if they provided an API, but whatever.
+                            /*
+                             * MU doesn't have an API, but as bad as their site is I don't want to DDoS them with my script.
+                             * To avoid triggering too many ajax requests, store groupInfo in localStorage
+                             */
                             var groupInfo = [groupUrl, groupIrc];
                             localStorage[groupId] = JSON.stringify(groupInfo);
                          }
                     });
                 } else {
-                    // We previously stored the data, so just get it from localStorage and skip screenscraping.
-                    // Was stored as [groupUrl, groupIrc] using JSON.stringify
+                    // localStorage had an entry for groupId, so load that entry.
+                    // It was stored as [groupUrl, groupIrc] using JSON.stringify
                     var groupInfo = JSON.parse(localStorage[groupId]);
-                    var groupIrc = groupInfo[1];
                     var groupUrl = groupInfo[0];
+                    var groupIrc = groupInfo[1];
 
-                    //Double-check that both have a length else we'll not want to include it.
+                    // If either varaible is 0 length, do not add that link
                     if (groupUrl.length > 0) {
                         $currentGroup.after('<a href="' + groupUrl + '">(Website)</a>');
                     }
                     if (groupIrc.length > 0) {
                         $currentGroup.after('<a href="' + groupIrc + '">(IRC)</a>');
                     }
-                    //Double-check that both have a length else we'll not want to include it.
-                    $currentGroup.remove();
+
+                    // $currentGroup was already replaced, remove it.
                     $currentGroup.remove();
                 }
-
             });
         }
 
-        // Now append some styles to the document
+        // Now append some styles to the document.  Very, very ugly doing this in a userScript
         var cssToAdd = '\
         .link-clicked {\
             text-decoration: line-through !important;\
@@ -195,6 +223,10 @@ function userScriptAction() {
             background-color: #FFF;\
         }\
         \
+            #mu-imp-release-listing tr.tr-clicked {\
+                background-color: #CCC;\
+            }\
+            \
         #mu-imp-release-listing td:first-child {\
             text-align: right;\
             width: 200px;\
@@ -258,10 +290,11 @@ function userScriptAction() {
     });
 }
 
-// Make sure we have jQuery to deal with Chrome not accepting @require
+// The script requires jQuery, but chrome doesn't support @require in userScripts, so this is a polyfill of sorts.
+// Hopefully this explains why all the above script was stored in the userScriptAction function
 if ( typeof localStorage != 'undefined') {
     if ( typeof jQuery == 'undefined') {
-        function addJQuery(callback) {
+        (function(callback) {
             var script = document.createElement("script");
             script.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
             script.addEventListener('load', function() {
@@ -270,9 +303,7 @@ if ( typeof localStorage != 'undefined') {
                 document.body.appendChild(script);
             }, false);
             document.body.appendChild(script);
-        }
-
-        addJQuery(userScriptAction);
+        })(userScriptAction);
     } else {
         userScriptAction();
     }
