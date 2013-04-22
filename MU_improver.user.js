@@ -101,6 +101,7 @@ function userScriptAction() {
                         url: groupLink,
                         dataType: 'text',
                         success: function(data) {
+                            console.log('Scraping data for: ' + groupName);
                             // This is our screenscraper
                             var scraper = $("<div>").html(data)[0]
 
