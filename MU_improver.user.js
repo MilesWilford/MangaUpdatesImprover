@@ -292,8 +292,8 @@ function userScriptAction() {
 
 // The script requires jQuery, but chrome doesn't support @require in userScripts, so this is a polyfill of sorts.
 // Hopefully this explains why all the above script was stored in the userScriptAction function
-if ( typeof localStorage != 'undefined') {
-    if ( typeof jQuery == 'undefined') {
+if (typeof localStorage != 'undefined') {
+    if (typeof jQuery == 'undefined') {
         (function(callback) {
             var script = document.createElement("script");
             script.setAttribute("src", "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
