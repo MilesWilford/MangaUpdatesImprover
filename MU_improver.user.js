@@ -170,6 +170,12 @@ function userScriptAction() {
             text-align: left;\
         }\
         \
+        #mu-improver-clear-storage {\
+            position: fixed;\
+                top: 0;\
+                right: 0;\
+        }\
+        \
         #mu-imp-release-listing h2 {\
             font-size: 16px;\
             padding: 0\
