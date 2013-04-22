@@ -16,7 +16,14 @@ function userScriptAction() {
         // This will add in the new mu-improver div
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
-        $muImp.append('<div id="mu-improver-clear-storage"><a onclick="localStorage.clear(); return false;" href="#">Clear localStorage</a>');
+        $muImp.append('<div id="mu-improver-controls">\
+            <p><a onclick="localStorage.clear(); return false;" href="#">Clear localStorage</a></p>\
+            <p><a id="mu-imp-hide" href="#">Toggle Improver Display</a></p>');
+
+        $('#mu-imp-hide').click(function() {
+            $('#mu-improver > div').not('#mu-improver-controls').fadeToggle('fast');
+            return false;
+        });
 
         // Now scrape the tables for the contents of their cells.
         // First, grab the date boxes
@@ -198,7 +205,7 @@ function userScriptAction() {
             text-align: left;\
         }\
         \
-        #mu-improver-clear-storage {\
+        #mu-improver-controls {\
             background-color: inherit;\
             position: fixed;\
                 top: 0;\
@@ -288,7 +295,6 @@ function userScriptAction() {
             }';
 
         $('body').append('<style type="text/css">' + cssToAdd + '</style>');
-
     });
 }
 
