@@ -199,9 +199,11 @@ function userScriptAction() {
         }\
         \
         #mu-improver-clear-storage {\
+            background-color: inherit;\
             position: fixed;\
                 top: 0;\
                 right: 0;\
+            z-index: 101;\
         }\
         \
         #mu-imp-release-listing h2 {\
