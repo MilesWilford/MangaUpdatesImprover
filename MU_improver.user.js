@@ -5,7 +5,7 @@
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
 // @version     006
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-// @include     *mangaupdates.com/releases.html
+// @include     *mangaupdates.com/releases.html*
 //
 // @history
 //
@@ -187,6 +187,8 @@ function userScriptAction() {
                     $currentGroup.remove();
                 }
             });
+            // Finally, re-add the pagination buttons
+            $releasesBox.append('<table>' + $('#main_content > div > table').html() + '</table>');
         }
 
         // Now append some styles to the document.  Very, very ugly doing this in a userScript
@@ -196,18 +198,22 @@ function userScriptAction() {
         }\
         \
         #mu-improver { \
+            background-color: #EEE;\
+            font-family: Arial;\
             position: absolute;\
                 top: 0;\
                 left: 0;\
-            z-index: 100;\
-            background-color: #EEE;\
-            width: 100%;\
-            font-family: Arial;\
             text-align: left;\
+            width: 100%;\
+            z-index: 100;\
         }\
         \
         #mu-improver-controls {\
             background-color: inherit;\
+            border: 1px #000 solid;\
+            border-radius: 8px;\
+            margin: 1.4em 1.4em 0 0;\
+            padding: 0 1.4em;\
             position: fixed;\
                 top: 0;\
                 right: 0;\
