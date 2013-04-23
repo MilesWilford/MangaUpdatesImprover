@@ -22,6 +22,7 @@ function userScriptAction() {
 
         $('#mu-imp-hide').click(function() {
             $('#mu-improver > div').not('#mu-improver-controls').fadeToggle('fast');
+            $("html, body").animate({ scrollTop: 0 }, "slow");
             return false;
         });
 
