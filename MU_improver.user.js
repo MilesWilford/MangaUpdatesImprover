@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     006
+// @version     007
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -96,7 +96,6 @@ function userScriptAction() {
 
                 // Strikeout the link
                 $(this).addClass('link-clicked');
-                // Color the table row
                 $(this).parent().parent().addClass('tr-clicked');
                 // Stop the click from continuing to process
                 return false;
@@ -104,7 +103,7 @@ function userScriptAction() {
 
             // If you click on just a table row, toggle the coloration of that row
             $releasesBox.find('tr').click(function() {
-                $(this).toggleClass('tr-clicked');
+                $(this).addClass('tr-clicked');
             });
 
             // Preserve the option to open the manga link by adding a (Link) option on the far left
