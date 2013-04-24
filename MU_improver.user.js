@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     007
+// @version     008
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -11,8 +11,31 @@
 //
 // ==/UserScript==
 
+
 function userScriptAction() {
+
+    function trimSpaces(string) {
+        return string.replace(/ /g,'');
+    }
+
     $(document).ready(function() {
+
+        var following = [];
+        if (localStorage["following"]) {
+            following = JSON.parse(localStorage["following"]);
+        }
+
+        following.toggleFollow = function (mangaName) {
+            if (this.indexOf(mangaName) == -1) {
+                this.push(mangaName);
+                console.log('follow: ' + mangaName);
+            } else {
+                this.splice(this.indexOf(mangaName), 1);
+                console.log('unfollow: ' + mangaName);
+            }
+            localStorage["following"] = JSON.stringify(this);
+        }
+
         // This will add in the new mu-improver div
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
@@ -97,18 +120,34 @@ function userScriptAction() {
                 // Strikeout the link
                 $(this).addClass('link-clicked');
                 $(this).parent().parent().addClass('tr-clicked');
+
                 // Stop the click from continuing to process
                 return false;
             });
 
-            // If you click on just a table row, toggle the coloration of that row
-            $releasesBox.find('tr').click(function() {
-                $(this).addClass('tr-clicked');
-            });
 
             // Preserve the option to open the manga link by adding a (Link) option on the far left
             mangaLinks.each(function() {
-                $(this).before(' <a style="float: left;" href=' + $(this).attr('href') + '>(Link)</a>')
+                var mangaName = trimSpaces($(this).text());
+                var checked = "";
+                if (following.indexOf(mangaName) != -1) {
+                    checked = " checked"; // leading space is needed
+                    $(this).parent().parent().addClass('tr-followed');
+                }
+                var $followBox = $('<p class="left">Follow: <input type="checkbox" name="' + mangaName + '"' + checked +' /></p>');
+
+                $(this).before('<a class="left" href=' + $(this).attr('href') + '>(Link)</a>');
+                $(this).before($followBox);
+
+                $followBox.find('input').click(function() {
+                    following.toggleFollow(mangaName);
+                    $(this).parent().parent().parent().toggleClass('tr-followed');
+                });
+            });
+
+            // If you click on just a table row, toggle on the coloration of that row
+            $releasesBox.find('tr').click(function() {
+                $(this).addClass('tr-clicked');
             });
 
             // Last-child td links represent links to group pages
@@ -224,6 +263,15 @@ function userScriptAction() {
             padding: 0\
         }\
         \
+        #mu-imp-release-listing .left {\
+            clear: both;\
+            display: inline-block;\
+            float: left;\
+            margin: 0;\
+            padding: 0;\
+            padding-right: 1em;\
+        }\
+        \
         #mu-imp-release-listing table {\
             font-size: 12px;\
             text-align: center;\
@@ -242,6 +290,14 @@ function userScriptAction() {
                 background-color: #CCC;\
             }\
             \
+            #mu-imp-release-listing tr.tr-followed {\
+                background-color: #FC912F;\
+            }\
+            \
+                #mu-imp-release-listing tr.tr-followed a:hover {\
+                    color: #000;\
+                }\
+                \
         #mu-imp-release-listing td:first-child {\
             text-align: right;\
             width: 200px;\
@@ -322,3 +378,5 @@ if (typeof localStorage != 'undefined') {
         userScriptAction();
     }
 }
+
+

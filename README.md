@@ -6,6 +6,8 @@ It will open manga pages pages inline.  It's not a responsive design and is pret
 
 It will also give you direct access to website and IRC URLs, if they exist.  We screenscrape to get those URLs, but store them in localStorage to reduce the hits to the MU site so you only have to load any group's info once per clearing of the browser's cookies.
 
+Using localStorage, this script will let you mark manga you are following to make them pop in the display more easily.  localStorage isn't necessarily permenent, so don't rely too heavily on this feature.
+
 God MangaUpdates has a bad site.  Uses tables for layouts and has nil semantics.  It's a pain targetting its elements properly.
 
-More to come.
+I will NOT support old browsers (e.g., IE8 or older) with my script.  Use a modern browser.
