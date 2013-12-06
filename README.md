@@ -14,7 +14,7 @@ I will NOT support old browsers (e.g., IE8 or older) with my script.  Use a mode
 
 # To install
 
-Download the file []'MU_improver.user.js'](https://github.com/MilesWilford/MangaUpdatesImprover/raw/master/MU_improver.user.js).
+Download the file ['MU_improver.user.js'](https://github.com/MilesWilford/MangaUpdatesImprover/raw/master/MU_improver.user.js).
 
 ## Firefox:
 
