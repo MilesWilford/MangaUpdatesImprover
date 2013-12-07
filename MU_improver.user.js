@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     010
+// @version     011
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -3533,16 +3533,18 @@ function userScriptAction() {
                 $currentGroup.after('<a href=' + groupLink + '>(MU)</a>')
 
                 // Now to finally ues that groups object from the start
-                var groupInfo = groups[groupId];
-                var groupUrl = groupInfo[0];
-                var groupIrc = groupInfo[1];
 
-                // If either varaible is 0 length, do not add that link
-                if (groupUrl.length > 0) {
-                    $currentGroup.after('<a href="' + groupUrl + '">(Website)</a>');
-                }
-                if (groupIrc.length > 0) {
-                    $currentGroup.after('<a href="' + groupIrc + '">(IRC)</a>');
+                var groupInfo = groups[groupId];
+                if (groupInfo) {
+                    var groupUrl = groupInfo[0];
+                    var groupIrc = groupInfo[1];
+                    // If either varaible is 0 length, do not add that link
+                    if (groupUrl.length > 0) {
+                        $currentGroup.after('<a href="' + groupUrl + '">(Website)</a>');
+                    }
+                    if (groupIrc.length > 0) {
+                        $currentGroup.after('<a href="' + groupIrc + '">(IRC)</a>');
+                    }
                 }
 
                 // $currentGroup was already replaced, remove it.
