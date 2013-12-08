@@ -23,3 +23,7 @@ Use greasemonkey
 ## Chrome:
 
 Drag and drop to the extensions page
+
+# "Group X is a bad link/broken!"
+
+Post it as an issue or submit the fix yourself.
