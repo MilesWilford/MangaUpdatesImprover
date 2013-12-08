@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     011
+// @version     012
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -13,7 +13,8 @@
 
 
 function userScriptAction() {
-
+    // "groupid": ["website URL","IRC URL"]
+    // For the love of god, always keep these in numeric order.
     var groups = {
         "16": ["http://manga-fiends.cjb.net",""],
         "17": ["http://www.mangareaders.com",""],
@@ -1264,7 +1265,7 @@ function userScriptAction() {
         "2199": ["http://www.ggkthx.org/",""],
         "2201": ["http://community.livejournal.com/perox2scans/profile",""],
         "2203": ["http://sagakure.livejournal.com/",""],
-        "2204": ["http://www.mangaupdates.com/series.html?id=50950","irc://irc.irchighway.net/cxc"],
+        "2204": ["http://www.cxcscans.com/","irc://irc.irchighway.net/cxc"],
         "2206": ["http://thinkinginhell.freevar.com/index.html",""],
         "2209": ["http://www.fanelorn.net/kotatsuworks/",""],
         "2210": ["http://makai-thief.livejournal.com/",""],
@@ -2781,7 +2782,7 @@ function userScriptAction() {
         "4616": ["http://www.mediafire.com/?6luzylx6l3yd0",""],
         "4617": ["http://nornir.fleeting-whisper.net/reader/",""],
         "4619": ["http://dotrscans.wordpress.com/",""],
-        "4620": ["http://www.mangaupdates.com/series.html?id=49820",""],
+        "4620": ["http://wonderland.schala.net/viewforum.php?f=35",""],
         "4621": ["http://troikatrans.wordpress.com/",""],
         "4622": ["http://meisakuworks.wordpress.com/",""],
         "4623": ["http://sw.littlewhitebutterflies.net/",""],
@@ -3077,7 +3078,7 @@ function userScriptAction() {
         "5065": ["http://asdfscans.net/","irc://irc.irchighway.net/asdf"],
         "5066": ["http://mangashouten.wordpress.com/",""],
         "5067": ["http://akito-h.minus.com/mFcnjzZlb",""],
-        "5070": ["http://www.mangaupdates.com/series.html?id=70001","irc://irc.irchighway.net/hel"],
+        "5070": ["http://www.twistedhelscans.com/","irc://irc.irchighway.net/hel"],
         "5071": ["http://yankeeshigh.webs.com/",""],
         "5074": ["http://limerencescans.webs.com",""],
         "5076": ["http://fmnlscans.wordpress.com/",""],
@@ -3276,7 +3277,7 @@ function userScriptAction() {
         "5550": ["http://ai-sakuma.livejournal.com/",""],
         "5552": ["http://anime-melc.blogspot.com/",""],
         "5557": ["http://ahr-scans.tumblr.com/",""],
-        "5558": ["https://www.dropbox.com/sh/f7ous1cufsmm70r/CLMdeiHd08",""],
+        "5558": ["https://www.dropbox.com/sh/vjwerlviukmajjj/6wiyzDhGtg",""],
         "5560": ["http://www.mangaunlimited.com",""],
         "5564": ["http://underthescarletcherrytrees.blogspot.it/",""],
         "5570": ["http://laute.tumblr.com/",""],
@@ -3443,10 +3444,8 @@ function userScriptAction() {
         });
 
         // There should be an equal number of dates and tables.  God help us if there aren't.
-        if (dates.length > tables.length) {
-            console.log("For some reason there are more dates than tables.");
-        } else if (dates.length < tables.length) {
-            console.log("For some reason there are more tables than dates.");
+        if (dates.length != tables.length) {
+            console.log("For some reason there are a different number of dates and tables.");
         } else {
             // Note that the rest of the script is contained in this else.
 
@@ -3454,10 +3453,10 @@ function userScriptAction() {
             $releasesBox.appendTo($muImp);
 
             /*
-             * Now re-built the tables by iterating through the releases tables.
+             * Now re-build the tables by iterating through the releases tables.
              * This will create a nice clean template for the data.
              */
-            for (var i = 0; i < dates.length; i++) {
+            for (var i = 0; i < dates.length; i++) {  // This is why it was vital dates and tables be equal length
                 $releasesBox.append('<h2>' + dates[i] + '</h2>');
                 $releasesBox.append('<table>'
                     + tables[i].map(function(rows) {
