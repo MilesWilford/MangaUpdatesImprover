@@ -1,4 +1,4 @@
-# MangaUpdates Improver
+# MangaUpdates Improver (r12)
 
 This is a userscript that should be installable in any browser.  Using some simple jQuery, it puts a simplified content overlay over the site at mangaupdates.com/releases.html with a cleaner display.
 
