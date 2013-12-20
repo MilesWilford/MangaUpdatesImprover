@@ -3267,7 +3267,7 @@ function userScriptAction() {
         "5522": ["http://sweet-temptation-scans.blogspot.com/",""],
         "5529": ["http://www.dragonandgriffin.com",""],
         "5531": ["http://agrypniascan.blogspot.com/",""],
-        "5533": ["http://mangaichiscans.blogspot.com/",""],
+        "5533": ["http://mangaichiscans.blogspot.com/","irc://irc.irchighway.net/msd"],
         "5534": ["http://weiberregiment.livejournal.com/",""],
         "5539": ["http://frostscans.wordpress.com/","irc://irc.irchighway.net/frost"],
         "5542": ["http://substitutescans.wordpress.com/",""],
