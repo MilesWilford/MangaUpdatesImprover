@@ -3216,7 +3216,7 @@ function userScriptAction() {
         "5364": ["http://chocobananascans.tumblr.com",""],
         "5370": ["http://tiger-and-bunny.livejournal.com/",""],
         "5371": ["http://bl-gyaru.com/",""],
-        "5373": ["http://summer-rain-scans.weebly.com/","irc://irc.ipocalypse.net/SummerRain"],
+        "5373": ["http://summer-rain.info/","irc://irc.ipocalypse.net/SummerRain"],
         "5374": ["http://fuwasyndrome.livejournal.com/",""],
         "5377": ["http://leno-obscurum.livejournal.com/",""],
         "5382": ["http://aoi-hisui.tumblr.com/",""],
