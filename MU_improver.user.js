@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     012
+// @version     013
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -3409,7 +3409,7 @@ function userScriptAction() {
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
         $muImp.append('<div id="mu-improver-controls">'
-            + '<p>MangaUpdates Improver release 12</p>'
+            + '<p>MangaUpdates Improver release 13</p>'
             + '<p><a href="https://github.com/MilesWilford/MangaUpdatesImprover">Click here to check for updates</a></p>'
             + '<p><a onclick="localStorage.clear(); return false;" href="#">Clear all following</a></p>'
             + '<p><a id="mu-imp-hide" href="#">Toggle Improver Display</a></p>');
