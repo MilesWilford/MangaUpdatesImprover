@@ -3182,7 +3182,7 @@ function userScriptAction() {
         "5230": ["http://www.mangaupdates.com/series.html?id=24388",""],
         "5239": ["http://bakeneko-scans.livejournal.com/",""],
         "5252": ["http://kiririn.me/","irc://irc.rizon.net/Kiririn"],
-        "5255": ["https://rkeg.wordpress.com/category/etc/deeltl-translation-works/,"""],
+        "5255": ["https://rkeg.wordpress.com/category/etc/deeltl-translation-works/",""],
         "5260": ["http://yaoislife.tumblr.com/",""],
         "5261": ["http://underdogscan.blogspot.com/",""],
         "5263": ["http://mankitsuscans.wordpress.com/",""],
