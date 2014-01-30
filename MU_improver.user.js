@@ -3363,7 +3363,7 @@ function userScriptAction() {
         "5723": ["http://rapemanscans.wordpress.com/",""],
         "5724": ["http://neetscans.wordpress.com/",""],
         "5726": ["http://shackscans.blogspot.com",""],
-        "5729": ["https://sites.google.com/site/cometscans/",""],
+        "5729": ["http://cometscans.wordpress.com/",""],
         "5734": ["http://queen-2-hearts.ucoz.com/",""],
         "5735": ["http://kimoi-group.tumblr.com/",""],
         "5736": ["http://mnemeaa.wordpress.com/",""],
