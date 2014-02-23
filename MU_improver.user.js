@@ -3411,7 +3411,7 @@ function userScriptAction() {
         var $muImp = $('<div id="mu-improver"/>');
         $muImp.appendTo('body');
         $muImp.append('<div id="mu-improver-controls">'
-            + '<p>MangaUpdates Improver release 13</p>'
+            + '<p>MangaUpdates Improver release 14</p>'
             + '<p><a href="https://github.com/MilesWilford/MangaUpdatesImprover">Click here to check for updates</a></p>'
             + '<p><a onclick="localStorage.clear(); return false;" href="#">Clear all following</a></p>'
             + '<p><a id="mu-imp-hide" href="#">Toggle Improver Display</a></p>');
