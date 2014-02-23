@@ -3,7 +3,7 @@
 // @namespace   http://github.com/MilesWilford
 // @author      Miles Wilford
 // @description Simple script that destroys existing MangaUpdates.com/releases content and display it better.
-// @version     013
+// @version     014
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // @include     *mangaupdates.com/releases.html*
 //
@@ -3198,7 +3198,7 @@ function userScriptAction() {
         "5293": ["http://chichan54.tumblr.com/",""],
         "5296": ["http://krizalidtranslations.wordpress.com/",""],
         "5304": ["http://nisepanlations.tumblr.com/",""],
-        "5309": ["http://oppai-scans.tumblr.com/",""],
+        "5309": ["http://www.oppai-scans.com/",""],
         "5310": ["http://shuuen-scans.tumblr.com/",""],
         "5312": ["http://detectiveconanscans.wordpress.com/",""],
         "5316": ["http://www.mangaupdates.com/series.html?id=77748","irc://irc.rizon.net/swagamoto"],
@@ -3381,7 +3381,8 @@ function userScriptAction() {
         "5763": ["http://slightlysarcastic.weebly.com",""],
         "5765": ["http://kiekie895.wix.com/otomescans",""],
         "5771": ["http://hyouka-rangers.tumblr.com",""],
-        "5776":["http://www.mangaupdates.com/series.html?id=99231", ""]
+        "5776": ["http://www.mangaupdates.com/series.html?id=99231", ""],
+        "5884": ["http://jiheishouscans.blogspot.com/",""]
     };
 
     function trimSpaces(string) {
