@@ -2782,7 +2782,7 @@ function userScriptAction() {
         "4616": ["http://www.mediafire.com/?6luzylx6l3yd0",""],
         "4617": ["http://nornir.fleeting-whisper.net/reader/",""],
         "4619": ["http://dotrscans.wordpress.com/",""],
-        "4620": ["http://wonderland.schala.net/viewforum.php?f=35",""],
+        "4620": ["http://wonderlandtranslations.net/",""],
         "4621": ["http://troikatrans.wordpress.com/",""],
         "4622": ["http://meisakuworks.wordpress.com/",""],
         "4623": ["http://sw.littlewhitebutterflies.net/",""],
