@@ -3382,6 +3382,7 @@ function userScriptAction() {
         "5765": ["http://kiekie895.wix.com/otomescans",""],
         "5771": ["http://hyouka-rangers.tumblr.com",""],
         "5776": ["http://www.mangaupdates.com/series.html?id=99231", ""],
+        "5855": ["http://desperatescanners.weebly.com/",""],
         "5880": ["http://pepperanon.blogspot.com/",""],
         "5884": ["http://jiheishouscans.blogspot.com/",""],
         "5945": ["http://kimagurescansub.wordpress.com/",""],
