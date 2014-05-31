@@ -3004,7 +3004,7 @@ function userScriptAction() {
         "4956": ["http://supremecream.wordpress.com/","irc://irc.irchighway.net/Supreme"],
         "4957": ["http://subdesu-h.net/",""],
         "4959": ["http://kanashii-anime.blogspot.com/",""],
-        "4960": ["http://www.vistrans.net/",""],
+        "4960": ["http://www.batoto.net/forums/user/28285-visceral/",""],
         "4963": ["http://cosmiquescans.blogspot.ca/",""],
         "4965": ["http://foo7890.wordpress.com/",""],
         "4966": ["http://tako-luka.blogspot.com/",""],
@@ -3386,7 +3386,8 @@ function userScriptAction() {
         "5880": ["http://pepperanon.blogspot.com/",""],
         "5884": ["http://jiheishouscans.blogspot.com/",""],
         "5945": ["http://kimagurescansub.wordpress.com/",""],
-        "5966": ["http://kobatochandaisuki.wordpress.com/",""]
+        "5966": ["http://kobatochandaisuki.wordpress.com/",""],
+        "5998": ["http://nanachanscans.wordpress.com/",""]
     };
 
     function trimSpaces(string) {
