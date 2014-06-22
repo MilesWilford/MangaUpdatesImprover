@@ -3384,6 +3384,7 @@ function userScriptAction() {
         "5776": ["http://www.mangaupdates.com/series.html?id=99231", ""],
         "5855": ["http://desperatescanners.weebly.com/",""],
         "5880": ["http://pepperanon.blogspot.com/",""],
+        "5891": ["http://aoc-translations.tumblr.com/",""],
         "5884": ["http://jiheishouscans.blogspot.com/",""],
         "5945": ["http://kimagurescansub.wordpress.com/",""],
         "5966": ["http://kobatochandaisuki.wordpress.com/",""],
