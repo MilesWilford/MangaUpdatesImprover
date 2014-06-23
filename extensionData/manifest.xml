@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CrAppInfo>
+  <Ver>4</Ver>
+  <ShortName>MangaUpdates Improver</ShortName>
+  <Description>Based on what I originally made at https://github.com/MilesWilford/MangaUpdatesImprover, I am attempting to develop a proper browser extension while testing if I like crossrider.</Description>
+  <PublisherName>Miles Wilford</PublisherName>
+  <HomePageLink>NA</HomePageLink>
+  <JSLink>https://w9u6a2p6.ssl.hwcdn.net/plugin/apps/59928/js/na/ch/app_code.js</JSLink>
+  <GroupID>0</GroupID>
+  <Domain>NA</Domain>
+  <RunInIframe>false</RunInIframe>
+  <ThanksURL>NA</ThanksURL>
+  <EmailSignature>NA</EmailSignature>
+  <SettingsURL>NA</SettingsURL>
+  <CertifiedInstall>NA</CertifiedInstall>
+  <ExposeSites>NA</ExposeSites>
+  <RemoteFBApiURL>NA</RemoteFBApiURL>
+  <DisableIE>true</DisableIE>
+  <DisableFF>true</DisableFF>
+  <EnableSearchIE>false</EnableSearchIE>
+  <EnableSearchFF>false</EnableSearchFF>
+  <AddressbarIE>NA</AddressbarIE>
+  <AddressbarFF>NA</AddressbarFF>
+  <AddressbarFFEnhanced>NA</AddressbarFFEnhanced>
+  <AddressbarCR>NA</AddressbarCR>
+  <NewTabURL>NA</NewTabURL>
+  <NewTabEmbed>NA</NewTabEmbed>
+  <OpenSearchURL>NA</OpenSearchURL>
+  <BackgroundJS>https://w9u6a2p6.ssl.hwcdn.net/plugin/apps/59928/bg/na/ch/bg_code.js</BackgroundJS>
+  <BackgroundVer>1</BackgroundVer>
+  <Manifest>NA</Manifest>
+  <ChangePrevious>false</ChangePrevious>
+  <UpdateInterval>360</UpdateInterval>
+  <SetNewTabFF>false</SetNewTabFF>
+  <SetNewTabIE>false</SetNewTabIE>
+  <PluginsUrl>https://w9u6a2p6.ssl.hwcdn.net/plugin/apps/59928/plugins/na/ch/plugins.json</PluginsUrl>
+  <PluginsVer>1</PluginsVer>
+  <PublisherId>30746</PublisherId>
+  <FbAppId>NA</FbAppId>
+  <ModeType>production</ModeType>
+  <IeButtonEnabled>false</IeButtonEnabled>
+  <UninstallerOfferUrl>NA</UninstallerOfferUrl>
+  <UninstallerOfferAction>NA</UninstallerOfferAction>
+</CrAppInfo>
