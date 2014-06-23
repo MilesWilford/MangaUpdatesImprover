@@ -18,6 +18,10 @@ Visit the link provided by Crossrider at http://crossrider.com/install/59928
 
 Chrome users can get it on the Chrome Web Store.  Link will be uploaded once my publish completes.
 
+## To Update
+
+If you're having trouble updating, remove the extension and re-install.  Your Following lists are stored in localStorage, so removing the extension shouldn't affect them  a lick.
+
 ## "Group X is a bad link/broken!"
 
 For this release, I copied and pasted from https://github.com/loadletter/mangaupdates-urlfix .  Thanks to the maintainers of that place.  At the time I grabbed, it was v1.6.38, so it's probably fallen out of date.  I'll try to release an update any time a commit is made there.
