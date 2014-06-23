@@ -47,8 +47,17 @@ appAPI.ready(function($) {
         });
     });
     
+    var colorFilters = $.makeArray($('#main_content > div > div > table')).map(function(table) {
+    	return $.makeArray($(table).find('tr')).map(function(tableRow) {
+            return $.makeArray($(tableRow).find('td:first-child')).map(function(tableCell) {
+            	return $(tableCell).attr('style');	
+            });
+    	});
+    }); 
+    
     // Each table's first row is a useless header
     tables.forEach(function(element) { element.splice(0,1); });
+    colorFilters.forEach(function(element) { element.splice(0,1); });
     
     // Preserve pagniation buttons
     var pagination = $('#main_content > div > table').html()
@@ -63,7 +72,8 @@ appAPI.ready(function($) {
         $(appAPI.resources.parseTemplate('display.html', {
             content: {
                 "tables" : tables,
-                "dates" : dates
+                "dates" : dates,
+                "colorFilters" : colorFilters
             }
         })).prependTo('body');
         

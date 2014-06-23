@@ -1,7 +1,7 @@
 <div id="mu-improver">
     <div id="mu-improver-controls">
         <p>Mangaupdates Overlay Extension development</p>
-        <p>v1.0.2</p>
+        <p>v1.1.0</p>
         <p>Visit the GitHub page for README and License</p>
         <p>https://github.com/MilesWilford/MangaUpdatesImprover</p>
     </div>
@@ -13,6 +13,7 @@
                     <tr>
                         <% for (var k = 0; k < content["tables"][i][j].length; k++) { %>
                             <td>
+                            	<div class="mu-improver-color-filter-marker" style="<%=content['colorFilters'][i][j][k]%>"></div>
                                 <%=content["tables"][i][j][k]%>
                                 
                             </td>
