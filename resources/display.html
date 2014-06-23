@@ -1,27 +1,26 @@
 <div id="mu-improver">
     <div id="mu-improver-controls">
         <p>Mangaupdates Overlay Extension</p>
-        <p>v1.1.1</p>
+        <p>v1.2.0</p>
         <p>Visit the GitHub page for README and License</p>
         <p>https://github.com/MilesWilford/MangaUpdatesImprover</p>
     </div>
-    <div id="mu-improver-release-listing">
-        <% for (var i = 0; i < content["dates"].length; i++) { %>
-            <h2><%=content["dates"][i]%></h2>
-            <table>
-                <% for (var j = 0; j < content["tables"][i].length; j++) { %>
-                    <tr>
-                        <% for (var k = 0; k < content["tables"][i][j].length; k++) { %>
-                            <td>
-                            	<div class="mu-improver-color-filter-marker" style="<%=content['colorFilters'][i][j][k]%>"></div>
-                                <%=content["tables"][i][j][k]%>
-                                
-                            </td>
-                        <% } %>
-                    </tr>
-                <% } %>
-            </table>
-        <% } %>
+    <div id="mu-improver-interface-wrapper">
+	    <div id="mu-improver-release-listing">
+	        <% for (var i = 0; i < content["dates"].length; i++) { %>
+	            <h1><time><%=content["dates"][i]%></time></h1>
+	            <hr />
+	            <table>
+	                <% for (var j = 0; j < content["tables"][i].length; j++) { %>
+	                    <tr style="<%=content['colorFilters'][i][j][0]%>">
+                    		<td class="mu-imp-manga-name"><%=content['tables'][i][j][0]%></td>
+                    		<td class="mu-imp-chapter-number"><%=content['tables'][i][j][1]%></td>
+                    		<td class="mu-imp-group-links"><%=content['tables'][i][j][2]%></td>
+	                    </tr>
+	                <% } %>
+	            </table>
+	        <% } %>
+	    </div>
+	    <div id="mu-improver-content-box"></div>
     </div>
-    <div id="mu-improver-content-box"></div>
 </div>

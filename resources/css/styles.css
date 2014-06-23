@@ -1,33 +1,41 @@
 #mu-improver {
-    position: absolute;
-        top: 0;
-        left: 0;
-    text-align: left;
-    padding-bottom: 15px;
+	position: absolute;
+		top: 0;
+		left: 0; 
+		right: 0;
+	padding-top: 40px;
 }
 
 #mu-improver-controls {
+	position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+	height: 40px;
+	
     border: thin solid black;
     border-radius: 8px;
-    padding: 0 1.4em;
-    position: fixed;
-        bottom: 0;
-        right: 0;
     background-color: #DDD;
-    z-index: 150;
     
-    opacity: 0.5;
-    font-size: 9px;
+    z-index: 100;
+    overflow: hidden;
 }
 
+	#mu-improver-controls p {
+		display: inline-block;
+	    font-size: 10px;
+	}
 
-#mu-improver-release-listing { float: left; }
+#mu-improver-release-listing {
+	width: 440px;
+	font-size: 12px;
+	text-align: center;
+}
 
-    #mu-improver-release-listing h2 {
-        font-size: 16px;
-        padding: 0;
-    }
-    
+	#mu-improver-release-listing h1 {
+		font-size: 14px;
+	}
+
     #mu-improver-release-listing .left {
         clear: both;
         display: inline-block;
@@ -36,12 +44,7 @@
         padding: 0;
         padding-right: 1em;
     }
-    
-    #mu-improver-release-listing table {
-        font-size: 12px;
-        text-align: center;
-    }
-    
+
     #mu-improver-release-listing tr {
     	position: relative;
         border-bottom: thin solid black;
@@ -49,16 +52,7 @@
     }
     
     #mu-improver-release-listing tr:nth-of-type(2n) { background-color: #DDD; }
-    
-    .mu-improver-color-filter-marker {
-    	position: absolute;
-    	top: 0;
-    	bottom: 0;
-    	right: -20px;
-    	width: 20px;
-    	z-index: 130;
-    }
-    
+
     #mu-improver-release-listing tr:hover {
         background-color: #FFF;
     }
@@ -74,43 +68,45 @@
             #mu-improver-release-listing tr.tr-followed a:hover {
                 color: #000;
             }
+	
+	.mu-imp-manga-name {
+		width: 200px;
+		text-align: right;
+	}
+	
+	.mu-imp-chapter-number {
+   		width: 80px;
+	}
+	
+	.mu-imp-group-links {
+		width: 160px;
+		text-align: left;
+	}
+
+#mu-improver-content-box {
+	position: fixed;
+		left: 440px;
+		right: 0;
+		top: 40px;
+		bottom: 4em;
+	overflow: scroll;
+}
+
+/* The following css is to hide and reflow stuff within the content box */
+
+#mu-improver-content-box td.series_content_cell { width: auto; }
     
-    #mu-improver-release-listing td:first-child {
-        text-align: right;
-        width: 200px;
+    #mu-improver-content-box .series_content_cell table { display: none; }
+    
+    #mu-improver-content-box .releasestitle { clear: both; }
+    
+    #listContainer { display: none; }
+    
+    .sContainer {
+        float: left;
+        width: 250px;
+        clear: none;
+        margin-left: 3em;
     }
     
-    #mu-improver-release-listing td:nth-child(2) {
-        width: 80px;
-    }
-    
-    #mu-improver-release-listing td:last-child {
-        text-align: left;
-        width: 160px;
-    }
-    
-    #mu-improver-content-box {
-        border-left: thin solid black;
-        height: 100%;
-        overflow: scroll;
-        position: fixed;
-            top: 0;
-            left: 470px;
-    }
-    
-        #mu-improver-content-box td.series_content_cell { width: auto; }
-        
-        #mu-improver-content-box .series_content_cell table { display: none; }
-        
-        #mu-improver-content-box .releasestitle { clear: both; }
-        
-        #listContainer { display: none; }
-        
-        .sContainer {
-            float: left;
-            width: 250px;
-            clear: none;
-            margin-left: 3em;
-        }
-        
-        .sCat:first-child { text-align: center; }
+    .sCat:first-child { text-align: center; }
