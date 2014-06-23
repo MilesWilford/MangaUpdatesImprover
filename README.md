@@ -1,6 +1,6 @@
 https://github.com/MilesWilford/MangaUpdatesImprover
 
-# MangaUpdates Improver v1.0.1-alpha
+# MangaUpdates Improver v1.0.2
 
 I've redeveloped my userscript as a standalone browser extension using Crossrider.  I'm pretty hamfisted with my coding abilities, but this suits me well.
 
@@ -14,9 +14,9 @@ God MangaUpdates has a bad site. Uses tables for layouts and has nil semantics. 
 
 ## To Install
 
-Visit the link provided by Crossrider at http://crossrider.com/install/59928
+Visit the link provided by Crossrider: http://crossrider.com/install/59928
 
-Chrome users can get it on the Chrome Web Store.  Link will be uploaded once my publish completes.
+Chrome users can get it on the Chrome Web Store: https://chrome.google.com/webstore/detail/mangaupdates-improver/ckllegcgfalmkmpijokkehikljjejdbh
 
 ## To Update
 
