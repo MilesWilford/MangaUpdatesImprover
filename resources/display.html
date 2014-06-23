@@ -1,0 +1,26 @@
+<div id="mu-improver">
+    <div id="mu-improver-controls">
+        <p>Mangaupdates Overlay Extension development</p>
+        <p>v1.0.1-alpha</p>
+        <p>Visit the GitHub page for README and License</p>
+        <p>https://github.com/MilesWilford/MangaUpdatesImprover</p>
+    </div>
+    <div id="mu-improver-release-listing">
+        <% for (var i = 0; i < content["dates"].length; i++) { %>
+            <h2><%=content["dates"][i]%></h2>
+            <table>
+                <% for (var j = 0; j < content["tables"][i].length; j++) { %>
+                    <tr>
+                        <% for (var k = 0; k < content["tables"][i][j].length; k++) { %>
+                            <td>
+                                <%=content["tables"][i][j][k]%>
+                                
+                            </td>
+                        <% } %>
+                    </tr>
+                <% } %>
+            </table>
+        <% } %>
+    </div>
+    <div id="mu-improver-content-box"></div>
+</div>
