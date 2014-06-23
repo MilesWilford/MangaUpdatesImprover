@@ -3,18 +3,21 @@
         top: 0;
         left: 0;
     text-align: left;
+    padding-bottom: 15px;
 }
 
 #mu-improver-controls {
     border: thin solid black;
     border-radius: 8px;
-    margin: 1.4em 1.4em 0 0;
     padding: 0 1.4em;
     position: fixed;
-        top: 0;
+        bottom: 0;
         right: 0;
     background-color: #DDD;
     z-index: 150;
+    
+    opacity: 0.5;
+    font-size: 9px;
 }
 
 
