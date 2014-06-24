@@ -27,7 +27,13 @@ appAPI.ready(function($) {
     if (!appAPI.isMatchPages("*mangaupdates.com/releases.html*")) return;
     
     // Load up groups list
-    appAPI.resources.includeJS('js/groups.js');
+    appAPI.resources.includeJS('js/getGroupsFromGit.js');
+    var groups = {};
+    if (localStorage["groups"]) {
+    	groups = JSON.parse(localStorage["groups"]);
+    } else {
+    	groups = getGroupsFromGit();
+    }
     
     // Get the Following list ready
     var following = makeFollowing();

@@ -6,6 +6,14 @@
 
 appAPI.ready(function($) {
 
-  // Place your code here (ideal for handling browser button, global timers, etc.)
-
+	// Runs a quick update of the groups list any time the browser is opened
+	appAPI.resources.includeJS('js/getGroupsFromGit.js');
+	periodicGroupsUpdate();
+	// Updates weekly if the browser is left on long-term
+	function periodicGroupsUpdate() {
+	    getGroupsFromGit();
+	    setTimeout(function() {
+	        backgroundTimer();
+	    }, 604800000);
+	}
 });
