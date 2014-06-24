@@ -1,6 +1,6 @@
 https://github.com/MilesWilford/MangaUpdatesImprover
 
-# MangaUpdates Improver v1.1.1
+# MangaUpdates Improver v1.3.0
 
 I've redeveloped my userscript as a standalone browser extension using Crossrider.  I'm pretty hamfisted with my coding abilities, but this suits me well.
 
@@ -33,3 +33,7 @@ When I release a new version, I will download the project from crossrider and co
 ## You are terrible at coding.  I'm going to take your code and do something better.
 
 I know.  Go for it.  Send me a message if you actually publish anything and I'll switch to using it too.
+
+### Credit
+
+Big thanks to everyone maintaining the urlfix groups list.  I directly access it in my script to maintain my groups.  Check out https://github.com/loadletter/mangaupdates-urlfix if you haven't - my extension will work in conjunction with this script without issue.
