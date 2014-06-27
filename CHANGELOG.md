@@ -1,3 +1,7 @@
+# v2.0.1
+
+* Fixed a slightly broken regex causing junk entries
+
 # v2.0.0
 
 * In this version, I will start maintaining an informal changelog.

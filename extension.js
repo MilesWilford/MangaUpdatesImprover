@@ -71,7 +71,7 @@ appAPI.ready(function( $ ) {
 			var columnScrapeRegEx = /series\.html\?id=(\d{1,9}).+?>(.+?)<\/a>(?:.|\n)+?<td.*?>(.+?)<\/td>(?:.|\n)+?>(.+?)<\/td>/
 			if (!columnScrapeRegEx.test($1)) {
 				// Our first regex failed.  Maybe there is no series page?  Try a second regex
-				columnScrapeRegEx = /()class="pad">(.+?)<\/td>(?:\n|.)+?<td>(.*)<\/td>(?:\n|.)+?(?:.|\n)+?>(.+?)<\/td>/
+				columnScrapeRegEx = /()class="pad".*?>(.+?)<\/td>(?:\n|.)+?<td.*?>(.*)<\/td>(?:\n|.)+?(?:.|\n)+?>(.+?)<\/td>/
 			}
 			var thisColumn = $1.match(columnScrapeRegEx);
 			// These defaults protect us from a failure if the regex doesn't work
