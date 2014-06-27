@@ -69,7 +69,9 @@
                 color: #000;
             }
 	
-	.mu-imp-manga-name {
+		#mu-improver-release-listing .link-clicked { text-decoration: line-through; }
+		
+	.mu-imp-series-name {
 		width: 200px;
 		text-align: right;
 	}

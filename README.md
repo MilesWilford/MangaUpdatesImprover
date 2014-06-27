@@ -1,6 +1,6 @@
 https://github.com/MilesWilford/MangaUpdatesImprover
 
-# MangaUpdates Improver v1.3.0
+# MangaUpdates Improver v2.0.0
 
 I've redeveloped my userscript as a standalone browser extension using Crossrider.  I'm pretty hamfisted with my coding abilities, but this suits me well.
 
@@ -24,15 +24,15 @@ If you're having trouble updating, remove the extension and re-install.  Your Fo
 
 ## "Group X is a bad link/broken!"
 
-For this release, I copied and pasted from https://github.com/loadletter/mangaupdates-urlfix .  Thanks to the maintainers of that place.  At the time I grabbed, it was v1.6.38, so it's probably fallen out of date.  I'll try to release an update any time a commit is made there.
-
-## This source code is all what the heck. Make it not suck
-
-When I release a new version, I will download the project from crossrider and commit it to GitHub.  You can fiddle with it in Crossrider or take a look yourself.
+Please check out https://github.com/loadletter/mangaupdates-urlfix . From this project is where I pull my groups list.  They maintain and provide updates to the script regularly, so you probably should be contributing to it instead of complaining to me.
 
 ## You are terrible at coding.  I'm going to take your code and do something better.
 
 I know.  Go for it.  Send me a message if you actually publish anything and I'll switch to using it too.
+
+## This is a pretty ugly display.  I can do better
+
+Take a look in the resources folder.  display.html shows the current HTML template and /css/styles.css the stylesheet for the extension.  Make anything you want, so long as it follows that template (assume all classes and IDs in the template are essential since they are).  If you need to use jQuery for any kind of beautiful animations, make a separate .js file for your stuff.  Submit it all back to me and I'll be happy to use it.
 
 ### Credit
 

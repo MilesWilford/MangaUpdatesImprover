@@ -1,25 +1,57 @@
 <div id="mu-improver">
     <div id="mu-improver-controls">
         <p>Mangaupdates Overlay Extension</p>
-        <p>v1.3.0</p>
+        <p>v2.0.0</p>
         <p>Visit the GitHub page for README and License</p>
         <p>https://github.com/MilesWilford/MangaUpdatesImprover</p>
     </div>
     <div id="mu-improver-interface-wrapper">
 	    <div id="mu-improver-release-listing">
-	        <% for (var i = 0; i < content["dates"].length; i++) { %>
-	            <h1><time><%=content["dates"][i]%></time></h1>
-	            <hr />
-	            <table>
-	                <% for (var j = 0; j < content["tables"][i].length; j++) { %>
-	                    <tr style="<%=content['colorFilters'][i][j][0]%>">
-                    		<td class="mu-imp-manga-name"><%=content['tables'][i][j][0]%></td>
-                    		<td class="mu-imp-chapter-number"><%=content['tables'][i][j][1]%></td>
-                    		<td class="mu-imp-group-links"><%=content['tables'][i][j][2]%></td>
-	                    </tr>
-	                <% } %>
-	            </table>
-	        <% } %>
+	    	<% 
+	    	for (var i = 0; i < data.length; i++) { 
+	    	var thisDaysReleases = data[i];
+	    	%>
+	    		<h1><time><%=thisDaysReleases.dateString%></time></h1>
+	    		<table>
+	    			<% 
+	    			for (var j = 0; j < thisDaysReleases.content.length; j++) { 
+	    				var thisRelease = thisDaysReleases.content[j];
+	    				var coloration = thisRelease.colorFilter ? ' style="background-color: #' + thisRelease.colorFilter +'"' : '';
+	    				var isFollowed = thisRelease.isFollowed;
+	    				if (isFollowed) {coloration += ' class="tr-followed"';}
+	    				var checked = isFollowed ? ' checked' : '';
+	    			%>
+	    				<tr<%=coloration%>>
+	    					<td class="mu-imp-series-name">
+	    						<% if (thisRelease.seriesId != "") { %>
+	    							<a class="left" href="http://www.mangaupdates.com/series.html?id=<%=thisRelease.seriesId%>">(Link)</a>
+	    							<p class="left">Follow: <input type="checkbox" class="follow-series" name="<%=thisRelease.seriesId%>" <%=checked%>></p>
+		    						<a class="series-link" href="http://www.mangaupdates.com/series.html?id=<%=thisRelease.seriesId%>">
+		    							<%=thisRelease.seriesName%>
+		    						</a>
+	    						<% } else { %>
+	    							<%=thisRelease.seriesName%>
+	    						<% } %>
+	    					</td>
+	    					<td class="mu-imp-chapter-number">
+	    						<%=thisRelease.seriesChapter%>
+	    					</td>
+	    					<td class="mu-imp-group-links">
+	    						<% 
+	    						for (var k = 0; k < thisRelease.scanlationGroups.length; k++) {
+	    						var thisScanlationGroup = thisRelease.scanlationGroups[k];
+	    						%>
+	    							<p>
+	    								<%=thisScanlationGroup.groupName%>: 
+	    								<a target="_blank" href="<%=thisScanlationGroup.groupUrl%>">(Website)</a>
+	    								<a href="http://www.mangaupdates.com/groups.html?id=<%=thisScanlationGroup.groupId%>">(MU)</a>
+	    							</p>
+	    						<% } %>
+	    					</td>
+	    				</tr>
+    				<% } %>
+	    		</table>
+	    	<% } %>
 	    </div>
 	    <div id="mu-improver-content-box"></div>
     </div>

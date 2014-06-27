@@ -1,4 +1,4 @@
- function getGroupsFromGit() {
+function getGroupsFromGit() {
 	appAPI.request.get({
 		url: "https://github.com/loadletter/mangaupdates-urlfix/raw/master/mangaupdates_group.user.js",
 		onSuccess: function(response, additionalInfo){
