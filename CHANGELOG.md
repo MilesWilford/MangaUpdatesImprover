@@ -1,3 +1,6 @@
+# v2.1.0
+* Improved the way groups are retrieved and fixed code that was not doing anything.  GetGroupsFromGit.js() now does nothing and is slated for removal
+
 # v2.0.1
 
 * Fixed a slightly broken regex causing junk entries
