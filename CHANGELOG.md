@@ -1,3 +1,8 @@
+# v2.2.0
+
+* Re-introduced missing pagination at bottom of list
+* significantly re-built the UI to be more attractive.
+
 # v2.1.0
 * Improved the way groups are retrieved and fixed code that was not doing anything.  GetGroupsFromGit.js() now does nothing and is slated for removal
 

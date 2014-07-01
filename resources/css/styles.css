@@ -1,19 +1,21 @@
-#mu-improver {
-	position: absolute;
-		top: 0;
-		left: 0; 
-		right: 0;
-	padding-top: 40px;
+body { background-color: white; }
+
+#mu-imp {
+    position: absolute;
+        top:    0;
+        left:   0; 
+        right:  0;
+        bottom: 0;
+    padding-bottom: 40px;
 }
 
-#mu-improver-controls {
-	position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-	height: 40px;
-	
-    border: thin solid black;
+#mu-imp-controls {
+    position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    height: 40px;
+    
     border-radius: 8px;
     background-color: #DDD;
     
@@ -21,86 +23,127 @@
     overflow: hidden;
 }
 
-	#mu-improver-controls p {
-		display: inline-block;
-	    font-size: 10px;
-	}
+    #mu-imp-controls p {
+        display: inline-block;
+        font-size: 10px;
+    }
 
-#mu-improver-release-listing {
-	width: 440px;
-	font-size: 12px;
-	text-align: center;
+#mu-imp-interface-wrapper {
+    position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 40px;
+    display: flex;
 }
 
-	#mu-improver-release-listing h1 {
-		font-size: 14px;
-	}
+#mu-imp-release-listing {
+    min-width: 350px;
+    width: 30%;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 12px;
+    
+    -webkit-box-shadow: 5px 0 10px 0 rgba(0,0,0,0.2);
+       -moz-box-shadow: 5px 0 10px 0 rgba(0,0,0,0.2);
+            box-shadow: 5px 0 10px 0 rgba(0,0,0,0.2);
+}
 
-    #mu-improver-release-listing .left {
-        clear: both;
-        display: inline-block;
-        float: left;
-        margin: 0;
-        padding: 0;
+    #mu-imp-release-listing h1 {
+        font-size: 14px;
+    }
+    
+    #mu-imp-release-listing ul { padding: 0; }
+    #mu-imp-release-listing li { list-style: none;  }
+    
+    .mu-imp-release {
+        text-align: left;
+        padding-right: 120px;
+        display: flex;
+        align-items: center;
+        padding: 1em;
+        border-top: 3px solid white;
+        
+        transition: background-color 0.25s;
+    }
+    
+    .mu-imp-release:first-of-type { border: 0; }
+    
+    .mu-imp-release:nth-of-type(2n)  { background-color: #DDD; }
+    .mu-imp-release:hover            { background-color: #EEE; }
+    .mu-imp-release.release-clicked  { background-color: #CCC; }
+    .mu-imp-release.release-followed { background-color: #ffd59a; }
+    
+    .mu-imp-release-info {
+        flex: 2;
         padding-right: 1em;
     }
-
-    #mu-improver-release-listing tr {
-    	position: relative;
-        border-bottom: thin solid black;
-        display: block;
+    
+    
+    .mu-imp-release-options {
+        width: 120px;
     }
     
-    #mu-improver-release-listing tr:nth-of-type(2n) { background-color: #DDD; }
-
-    #mu-improver-release-listing tr:hover {
-        background-color: #FFF;
+    .mu-imp-release-options dt {
+    	font-weight: bold;
     }
     
-        #mu-improver-release-listing tr.tr-clicked {
-            background-color: #CCC;
-        }
-        
-        #mu-improver-release-listing tr.tr-followed {
-            background-color: #FC912F;
-        }
-        
-            #mu-improver-release-listing tr.tr-followed a:hover {
-                color: #000;
-            }
-	
-		#mu-improver-release-listing .link-clicked { text-decoration: line-through; }
-		
-	.mu-imp-series-name {
-		width: 200px;
-		text-align: right;
-	}
-	
-	.mu-imp-chapter-number {
-   		width: 80px;
-	}
-	
-	.mu-imp-group-links {
-		width: 160px;
-		text-align: left;
-	}
+    .mu-imp-group-links { 
+    	margin: 0;
+    	padding: 0;
+    }
+    
+    .mu-imp-release h2 {
+        margin: 0;
+        font-size: 12px;
+    }
+    
+    .mu-imp-release p {
+        margin: 0;
+        font-size: 12px;
+    }
+    
+    .mu-imp-release .small {
+        font-size: 12px;
+    }
+    
+    #mu-imp-paginator {
+        font-size: 12px;
+    }
+    
+    #mu-imp-paginator:before {
+        content: "«"
+    }
+    
+    #mu-imp-paginator:after {
+        content: "»"
+    }
+    
+    #mu-imp-paginator li {
+        display: inline-block;
+        padding: 0;
+    }
+    
+    #mu-imp-paginator .mu-imp-current-page { 
+        font-weight: bold;
+        font-size: 14px;
+        pointer-events: none;
+    }
 
-#mu-improver-content-box {
-	position: fixed;
-		left: 440px;
-		right: 0;
-		top: 40px;
-		bottom: 4em;
-	overflow: scroll;
+#mu-imp-content-box {
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 /* The following css is to hide and reflow stuff within the content box */
 
-#mu-improver-content-box td.series_content_cell { width: auto; }
+#mu-imp-content-box td.series_content_cell { width: auto; }
     
-    #mu-improver-content-box .series_content_cell table { display: none; }
+    #mu-imp-content-box .series_content_cell table { display: none; }
     
-    #mu-improver-content-box .releasestitle { clear: both; }
+    #mu-imp-content-box .releasestitle { clear: both; }
     
     #listContainer { display: none; }
     
