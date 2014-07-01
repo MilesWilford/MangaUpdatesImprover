@@ -1,28 +1,32 @@
-# v2.2.4
+### v2.2.5
+
+* Improved pagination feature
+
+### v2.2.4
 
 * Fixed a slightly broken regex
 
-# v2.2.3
+### v2.2.3
 
 * Properly added prefix-free
 
-# v2.2.2
+### v2.2.2
 
 * I guess I should test that my fix works before publishing next time...
 
-# v2.2.1
+### v2.2.1
 
 * Set script not to appear on series pages
 
-# v2.2.0
+## v2.2.0
 
 * Re-introduced missing pagination at bottom of list
 * significantly re-built the UI to be more attractive.
 
-# v2.1.0
+## v2.1.0
 * Improved the way groups are retrieved and fixed code that was not doing anything.  GetGroupsFromGit.js() now does nothing and is slated for removal
 
-# v2.0.1
+### v2.0.1
 
 * Fixed a slightly broken regex causing junk entries
 

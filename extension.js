@@ -48,9 +48,9 @@ appAPI.ready(function( $ ) {
                     "seriesChapter" : series chapter,
                     "colorFilter" : colorFilter,
                     "scanlationGroups" : [{
-                        groupId: group ID,
-                        groupName: group name,
-                        "groupUrl: retrieved from groups[] array
+                        "groupId" : group ID,
+                        "groupName" : group name,
+                        "groupUrl" : retrieved from groups[] array
                     }]
                 }]
             }
@@ -134,25 +134,23 @@ appAPI.ready(function( $ ) {
         });     
         
         var $paginator = $('#mu-imp-paginator');
+        
+        // No need to beware XSS attacks - this script will only ever pass digits
         var currentPage = window.location.search.match(/page=(\d{1,9}?)&/); 
-        if (currentPage === null) {
-            $paginator.append($('<li class="mu-imp-current-page">1</li>'));
-            for (var i = 0; i < 4; i++) {
-                var thisPageUrl= 'http://www.mangaupdates.com/releases.html?page=' + (i + 2) + '&';
-                $paginator.append($('<li><a href="' + thisPageUrl + '">' + (i + 2) + '</a></li>'));
-            }
-        } else {
-            currentPage = parseInt(currentPage[1], 10);
-            if (isNaN(currentPage)) {
-                alert('Potential XSS attack.  Ending script.');
-                return;
-            }
-            for (var i = -2; i < 3; i++) {
-                if (currentPage + i < 1) { continue; }
-                var thisPageUrl= 'http://www.mangaupdates.com/releases.html?page=' + (currentPage + i) + '&';
-                var currentPageClass = (i === 0) ? 'mu-imp-current-page' : '';
-                $paginator.append($('<li class="' + currentPageClass + '"><a href="' + thisPageUrl + '">' + (currentPage + i) + '</a></li>'));
-            }
-        }
+        currentPage = (currentPage === null) ? 1 : parseInt(currentPage[1], 10);
+        
+        (function() {
+	        var pagesAdded = 0;
+	        var currentPageModifier = -3;
+	        while (pagesAdded < 5) {
+	        	currentPageModifier++;
+	        	var workingPage = currentPageModifier + currentPage;
+	        	if (workingPage < 1) { continue; }
+	        	var thisPageUrl = 'http://www.mangaupdates.com/releases.html?page=' + workingPage + '&';
+	        	var listOpener = (currentPageModifier === 0) ? '<li class="mu-imp-current-page">' : '<li>';
+	        	$paginator.append($(listOpener + '<a href="' + thisPageUrl + '">' + workingPage + '</a></li>'));
+	        	pagesAdded++;
+	        }
+        })();
     });
 });

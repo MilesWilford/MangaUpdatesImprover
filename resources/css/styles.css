@@ -126,7 +126,7 @@ body { background-color: white; }
     
     #mu-imp-paginator li {
         display: inline-block;
-        padding: 0;
+        padding: 0 0.5em;
     }
     
     #mu-imp-paginator .mu-imp-current-page { 
