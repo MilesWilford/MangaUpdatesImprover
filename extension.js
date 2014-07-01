@@ -62,7 +62,7 @@ appAPI.ready(function( $ ) {
         $('#main_content').html().replace(/class="titlesmall".+?<i>(.+?)<\/i>(?:.|\n)+?<table.+?>((?:.|\n)+?)<\/table>/g, function($0, $1, $2) {
             var contentColumns = [];
             $2.replace(/<tr>((?:.|\n)+?)<\/tr>/g, function( $0, $1 ) {
-                var columnScrapeRegEx = /series\.html\?id=(\d{1,9}).+?>(.+?)<\/a>(?:.|\n)+?<td.*?>(.+?)<\/td>(?:.|\n)+?>(.+?)<\/td>/;
+                var columnScrapeRegEx = /series\.html\?id=(\d{1,9}).+?>(.+?)<\/a>(?:.|\n)+?<td.*?>(.*?)<\/td>(?:.|\n)+?>(.+?)<\/td>/;
                 if (!columnScrapeRegEx.test($1)) {
                     // Our first regex failed.  Maybe there is no series page?  Try a second regex
                     columnScrapeRegEx = /()class="pad".*?>(.+?)<\/td>(?:\n|.)+?<td.*?>(.*)<\/td>(?:\n|.)+?(?:.|\n)+?>(.+?)<\/td>/;
@@ -121,7 +121,7 @@ appAPI.ready(function( $ ) {
         
         
         var $contentBox = $('#mu-imp-content-box');
-        $('.series-link').click(function( event ) {
+        $('.mu-imp-series-link').click(function( event ) {
             event.preventDefault();
             
             var target = $(this).attr('href') + ' .series_content_cell';

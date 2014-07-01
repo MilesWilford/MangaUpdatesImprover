@@ -99,6 +99,10 @@ body { background-color: white; }
         font-size: 12px;
     }
     
+    .mu-imp-release .link-clicked {
+    	text-decoration: line-through;
+    }
+    
     .mu-imp-release p {
         margin: 0;
         font-size: 12px;

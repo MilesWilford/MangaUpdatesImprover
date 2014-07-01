@@ -1,3 +1,7 @@
+# v2.2.4
+
+* Fixed a slightly broken regex
+
 # v2.2.3
 
 * Properly added prefix-free
