@@ -1,3 +1,11 @@
+# v2.2.3
+
+* Properly added prefix-free
+
+# v2.2.2
+
+* I guess I should test that my fix works before publishing next time...
+
 # v2.2.1
 
 * Set script not to appear on series pages
