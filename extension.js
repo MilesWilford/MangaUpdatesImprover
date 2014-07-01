@@ -22,7 +22,7 @@ function makeFollowing() {
 
 appAPI.ready(function( $ ) {
     // This script will only run on the releases.html page
-    if (!appAPI.isMatchPages("*mangaupdates.com/releases.html*")) {return;}
+    if (!appAPI.isMatchPages("*mangaupdates.com/releases.html*" || appAPI.isMatchPages("*type=series*"))) {return;}
     
     // Load up groups list
     appAPI.db.async.get("groups", function(value) {

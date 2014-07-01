@@ -1,3 +1,7 @@
+# v2.2.1
+
+* Set script not to appear on series pages
+
 # v2.2.0
 
 * Re-introduced missing pagination at bottom of list
