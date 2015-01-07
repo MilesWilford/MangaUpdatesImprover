@@ -16,8 +16,8 @@ body { background-color: white; }
         right: 0;
     height: 40px;
     
-    border-radius: 8px;
     background-color: #DDD;
+    box-shadow: 2px 0 3px 0 rgba(0,0,0,0.16);
     
     z-index: 100;
     overflow: hidden;
@@ -45,9 +45,7 @@ body { background-color: white; }
     overflow-x: hidden;
     font-size: 12px;
     
-    -webkit-box-shadow: 5px 0 10px 0 rgba(0,0,0,0.2);
-       -moz-box-shadow: 5px 0 10px 0 rgba(0,0,0,0.2);
-            box-shadow: 5px 0 10px 0 rgba(0,0,0,0.2);
+	box-shadow: 2px 0 3px 0 rgba(0,0,0,0.16);
 }
 
     #mu-imp-release-listing h1 {
@@ -65,7 +63,7 @@ body { background-color: white; }
         padding: 1em;
         border-top: 3px solid white;
         
-        transition: background-color 0.25s;
+        transition: background-color 0.5s ease-in-out;
     }
     
     .mu-imp-release:first-of-type { border: 0; }
@@ -80,6 +78,52 @@ body { background-color: white; }
         padding-right: 1em;
     }
     
+    
+    	.mu-imp-follow-series {
+    		padding: 4px;
+    		margin: 2px;
+			cursor: pointer;
+    		transition: 0.5s ease-in-out;
+    	}
+    	
+    		.mu-imp-follow-series:hover {
+    			background-color: #ffd59a;
+    			box-shadow: 1px 0 1.5px 0 rgba(0,0,0,0.12);
+    		}
+    		
+	    		.release-followed .mu-imp-follow-series:hover {
+	    			background-color: #CCC;
+	    		}
+    	
+	    	.mu-imp-follow-series input {
+	    		display: none;
+	    	}
+    	
+    		.mu-imp-follow-series:before, 
+    		.mu-imp-follow-series:after {
+    			display: inline-block;
+    			position: relative;
+    				top: 4px;
+    			overflow: hidden;
+    			transition: 0.5s ease-in-out;
+    			text-align: center;
+    		}
+    		
+    		.mu-imp-follow-series:before {
+    			content: "Follow";
+    			width: 5em;
+    		}
+    			.release-followed .mu-imp-follow-series:before {
+    				width: 0;
+    			}
+    	
+    		.mu-imp-follow-series:after {
+    			content: "Unfollow";
+    			width: 0;
+    		}
+    			.release-followed .mu-imp-follow-series:after {
+    				width: 5em;
+    			}
     
     .mu-imp-release-options {
         width: 120px;
@@ -135,11 +179,28 @@ body { background-color: white; }
         pointer-events: none;
     }
 
-#mu-imp-content-box {
+
+#mu-imp-content-box,
+#mu-imp-parsed-content-box{
     flex: 1;
     overflow-y: scroll;
     overflow-x: hidden;
+    position: relative;
+    padding: 20px;
 }
+
+#mu-imp-parsed-content-box aside {
+    float: right;
+    padding-left: 20px;
+    min-width: 244px;
+}
+
+#mu-imp-parsed-content-box ol,
+#mu-imp-parsed-content-box ul{ 
+    list-style: none;
+    text-align: left;
+}
+
 
 /* The following css is to hide and reflow stuff within the content box */
 

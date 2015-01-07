@@ -1,0 +1,70 @@
+<div id="mu-imp">
+    <div id="mu-imp-controls">
+        <p>Mangaupdates Overlay Extension</p>
+        <p>v3.0</p>
+        <p>Visit the GitHub page for README and License</p>
+        <p>https://github.com/MilesWilford/MangaUpdatesImprover</p>
+    </div>
+    <div id="mu-imp-interface-wrapper">
+        <div id="mu-imp-release-listing">
+            <% 
+            for (var i = 0; i < data.length; i++) { 
+            var thisDaysReleases = data[i];
+            %>
+                <h1><time><%=thisDaysReleases.dateString%></time></h1>
+                <ul>
+                    <% 
+                    for (var j = 0; j < thisDaysReleases.content.length; j++) { 
+                        var thisRelease = thisDaysReleases.content[j];
+                        var coloration = thisRelease.colorFilter ? ' style="background-color: #' + thisRelease.colorFilter +'"' : '';
+                        var isFollowed = thisRelease.isFollowed;
+                        var isFollowedClass = isFollowed ? 'release-followed' : '';
+                        var checked = isFollowed ? ' checked' : '';
+                    %>
+                        <li class="mu-imp-release <%=isFollowedClass%>"<%=coloration%>>
+                            <div class="mu-imp-release-info">
+                                <h2 class="mu-imp-series-name">
+                                    <% if (thisRelease.seriesId != "") { %>
+                                        <a class="mu-imp-series-link" data-seriesid="<%=thisRelease.seriesId%>" href="https://www.mangaupdates.com/series.html?id=<%=thisRelease.seriesId%>">
+                                            <%=thisRelease.seriesName%>
+                                        </a>
+                                    <% } else { %>
+                                        <%=thisRelease.seriesName%>
+                                    <% } %>
+                                </h2>
+                                <p class="mu-imp-chapter-number">
+                                    <%=thisRelease.seriesChapter%>
+                                </p>
+                                <% if (thisRelease.seriesId != '') { %>
+	                                <p class="small">
+	                                    <label class="mu-imp-follow-series"><input type="checkbox" class="follow-series" name="<%=thisRelease.seriesId%>" <%=checked%>></label>
+	                                    <a href="https://www.mangaupdates.com/series.html?id=<%=thisRelease.seriesId%>">(Link)</a>
+	                                </p>
+                                <% } %>
+                            </div>
+                            <div class="mu-imp-release-options">
+                                <dl class="mu-imp-group-links">
+                                    <% 
+                                    for (var k = 0; k < thisRelease.scanlationGroups.length; k++) {
+                                    var thisScanlationGroup = thisRelease.scanlationGroups[k];
+                                    %>
+                                        <dt class="group-<%=thisScanlationGroup.groupId%>"><%=thisScanlationGroup.groupName%>:</dt>
+                                        <dd>
+                                        	<% if (thisScanlationGroup.groupURL != '') { %>
+                                            	<a target="_blank" href="<%=thisScanlationGroup.groupUrl%>">(Website)</a>
+                                            <% } %>
+                                            <a href="https://www.mangaupdates.com/groups.html?id=<%=thisScanlationGroup.groupId%>">(MU)</a>
+                                        </dd>
+                                    <% } %>
+                                </dl>
+                            </div>
+                        </li>
+                    <% } %>
+                </ul>
+            <% } %>
+            <ul id="mu-imp-paginator"></ul>
+        </div>
+        <div id="mu-imp-content-box"></div>
+        <!-- <section id="mu-imp-parsed-content-box"></section> -->
+    </div>
+</div>

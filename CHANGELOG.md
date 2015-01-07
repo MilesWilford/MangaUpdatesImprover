@@ -1,3 +1,12 @@
+# v3.0.0
+
+* Major change
+* Visuals: a significant overhaul including a lot of design tweaks
+* JSON groups fetching.  It's actually still an xhttp request because github was funny, but I switched to a proper request of the JSON data from the mangaupdates-urlfix repo instead of my old ugly method.
+* Minor tweaks and bug fixes all around
+* Changed substance of template files to break it up a bit more
+* Included prefix-free because I like it.
+
 ### v2.2.5
 
 * Improved pagination feature

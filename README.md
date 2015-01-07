@@ -1,4 +1,4 @@
-# MangaUpdates Improver v2.2.5
+# MangaUpdates Improver v3.0
 
 I've redeveloped my userscript as a standalone browser extension using Crossrider.  I'm pretty hamfisted with my coding abilities, but this suits me well.
 

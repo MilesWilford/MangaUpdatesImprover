@@ -25,6 +25,7 @@ function makeFollowing() {
 }
 
 appAPI.ready(function( $ ) {
+    
     // Only run on releases.html, do not run on series releases pages
     if (!appAPI.isMatchPages("*mangaupdates.com/releases.html*") || appAPI.isMatchPages("*type=series*")) {return;}
     
@@ -33,6 +34,21 @@ appAPI.ready(function( $ ) {
     // The rest of the script takes place in this callback since it relies on data from groups
     appAPI.db.async.get("groups", function(value) {
         var groups = value;
+        if (!groups) {
+        	appAPI.request.get({
+        		url: 'https://raw.githubusercontent.com/loadletter/mangaupdates-urlfix/master/src/groups.json',
+        		onSuccess: function (response, additionalInfo) {
+        			groups = JSON.parse(response);
+        			appAPI.db.async.set("groups", groups, appAPI.time.daysFromNow(4));
+        		},
+        		onFailure: function (httpCode) { 
+        			console.log ('Failed to fetch JSON groups list: ' + httpCode); 
+        		}
+        	});
+        	// $.getJSON("https://raw.githubusercontent.com/loadletter/mangaupdates-urlfix/master/src/groups.json", function (json) {
+        	// 	groups = JSON.parse(json);
+        	// }).fail(console.log("Something went wrong getting the JSON groups."));
+        }
     
         
         // Make our following list
@@ -61,7 +77,7 @@ appAPI.ready(function( $ ) {
                 }]
             }
             
-            This full array of releases objects will be passed to the display.html template where it will be iterated through to provide info.
+            This full array of releases objects will be passed to the releases-template.html template where it will be iterated through to provide info.
          */
         var releases = [];
         // Begin the screenscrape by grabbing #main_content and scanning it for our <h2>s and <tables>s
@@ -69,12 +85,12 @@ appAPI.ready(function( $ ) {
         $('#main_content').html().replace(/class="titlesmall".+?<i>(.+?)<\/i>(?:.|\n)+?<table.+?>((?:.|\n)+?)<\/table>/g, function($0, $1, $2) {
             var contentColumns = [];
             // Grab the inside of each table row as a capture group.  I suppose jQuery would also work for this.  TODO: is jQuery or regex better performance?
-            $2.replace(/<tr>((?:.|\n)+?)<\/tr>/g, function( $0, $1 ) {
+            $2.replace(/<tr>([\s\S]+?)<\/tr>/g, function( $0, $1 ) {
             	// $1 = seriesId, $2 = seriesName, $3 = seriesChapter, $4 = scanlationGroups
-                var columnScrapeRegEx = /series\.html\?id=(\d{1,9}).+?>(.+?)<\/a>(?:.|\n)+?<td.*?>(.*?)<\/td>(?:.|\n)+?>(.+?)<\/td>/;
+                var columnScrapeRegEx = /series\.html\?id=(\d{1,9}).+?>(.+?)<\/a>[\s\S]+?<td.*?>(.*?)<\/td>[\s\S]+?>(.+?)<\/td>/;
                 if (!columnScrapeRegEx.test($1)) {
                     // Our first regex failed.  Probably no series page, modify the regex to not look for ID but follow same capture order
-                    columnScrapeRegEx = /()class="pad".*?>(.+?)<\/td>(?:\n|.)+?<td.*?>(.*)<\/td>(?:\n|.)+?(?:.|\n)+?>(.+?)<\/td>/;
+                    columnScrapeRegEx = /()class="pad".*?>(.+?)<\/td>[\s\S]+?<td.*?>(.*)<\/td>[\s\S]+?[\s\S]+?>(.+?)<\/td>/;
                 }
                 var thisColumn = $1.match(columnScrapeRegEx);
                 // These defaults protect us from a failure if the regex doesn't work
@@ -126,7 +142,7 @@ appAPI.ready(function( $ ) {
         $('body').empty();
         appAPI.resources.includeCSS('css/styles.css');
         appAPI.resources.includeJS('js/prefixfree.min.js');
-        $(appAPI.resources.parseTemplate('display.html', { data : releases })).prependTo('body');
+        $(appAPI.resources.parseTemplate('releases-template.html', { data : releases })).prependTo('body');
         
         // See display.html.  The whole presentation layer was just built minus the paginator links
         
@@ -139,13 +155,45 @@ appAPI.ready(function( $ ) {
         
         var $contentBox = $('#mu-imp-content-box');
         $('.mu-imp-series-link').click(function( event ) {
+        	var thisSeriesId = $(this).data('seriesid');
             event.preventDefault();
             
             // .series_content_cell acts as a rare example of a semantic identifier for content!  Huzzah, mangaupdates, you almost did semantics!
             // Sadly, the content will still be in a <td> when we get it, but this isn't really harmful so just leave it that way.
             var target = $(this).attr('href') + ' .series_content_cell';
             $contentBox.empty();
-            $contentBox.load(target);
+            $contentBox.load(target, function() {
+            	// Load the element and drop its contents into $contentBox so that it can be manipulated
+            	var columns = [
+            		$contentBox.find('.sContainer').html(),
+            		$contentBox.find('.sMember').html()
+        		];
+        		var parsedData = {
+        			"title" : $contentBox.find('.releasestitle').text(),
+        			"seriesid" : thisSeriesId
+        		};
+        		$contentBox.html().replace(/<div class="sCat"><b>([\s\S]+?)<\/b>[\s\S]+?<div class="sContent(?:Ads)?".*?>([\s\S]+?)<\/div>\n<br>/g, function($0, $1, $2) {
+        			parsedData[$1.toLowerCase()] = $2;
+        		});
+        		
+        		parsedData["image"] = $(parsedData.image).find('img').attr('src');
+        		(function() {
+        			var latestReleases = [];
+        			parsedData["latest release(s)"].replace(/<i>(\S+?)<\/i>.+?\?id=(\d+?)" title="Group Info">(.+?)<\/a>.+?>\((\d{1,4})/g, function($0, $1, $2, $3, $4) {
+        				latestReleases.push({
+        					"releaseChapter" : $1,
+        					"groupUrl" : groups[$2],
+        					"groupName" : $3,
+        					"daysAgo" : $4
+        				});
+        			});
+        			delete parsedData["latest release(s)"]
+        			parsedData["latestReleases"] = latestReleases;
+        		})();
+        		
+        		console.log(parsedData);
+        		$('#mu-imp-parsed-content-box').html(appAPI.resources.parseTemplate('series-template.html', { data : parsedData }));
+            });
             
             // Strikeout the link
             $(this).addClass('link-clicked');
@@ -158,7 +206,6 @@ appAPI.ready(function( $ ) {
         var currentPage = window.location.search.match(/page=(\d{1,9}?)&/); 
         currentPage = (currentPage === null) ? 1 : parseInt(currentPage[1], 10);
         
-        // Avoid namespace issues
         (function() {
 	        var pagesAdded = 0;
 	        var currentPageModifier = -3;

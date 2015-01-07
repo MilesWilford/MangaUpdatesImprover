@@ -1,0 +1,43 @@
+<aside>
+    <img class="manga-cover" src="<%=data.image%>" />
+    <section class="manga-genres">
+        <%=data.genre%>
+    </section>
+    <section class="manga-categories">
+        <%=data.categories%>
+    </section>
+</aside>
+<h1><%=data.title%></h1>
+<section class="manga-description">
+    <%=data.description%>
+</section>
+<section class="manga-latest-releases">
+    <ol>
+    <% for (var i = 0; i < data.latestReleases.length; i++) {
+        var thisRelease = data.latestReleases[i]; 
+        var daysAgoString = "";
+        if (thisRelease.daysAgo == '0') {
+            daysAgoString = "today";
+        } else if (thisRelease.daysAgo == '1') {
+            daysAgoString = "yesterday";
+        } else {
+            daysAgoString = thisRelease.daysAgo + " days ago";
+        } %>
+        <li>c.<%=thisRelease.releaseChapter%> by <a href="<%=thisRelease.groupUrl%>"><%=thisRelease.groupName%></a> posted <%=daysAgoString%></li>
+    <% } %>
+    </ol>
+</section>
+<section class="manga-mangakas">
+    <h2>Artists:</h2>
+    <p><%=data["artist(s)"]%></p>
+    <h2>Authors:</h2>
+    <p><%=data["author(s)"]%></p>
+    <h2>Year:</h2>
+    <p><%=data.year%></p>
+    <h2>Original Publisher:</h2>
+    <p><%=data["original publisher"]%></p>
+    <h2>Serialized In:</h2>
+    <p><%=data["serialized in (magazine)"]%></p>
+    <h3>User Ratings:</h3>
+    <%=data["user rating"]%>
+</section>
